@@ -20,7 +20,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
       // Cập nhật store khi trạng thái thay đổi
-      console.log(event)
+      console.log(event,session)
       useAuthStore.setState({ user: session?.user ?? null });
       if (!session?.user) {
         router.push("/auth");

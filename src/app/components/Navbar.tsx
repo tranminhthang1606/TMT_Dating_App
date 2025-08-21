@@ -15,6 +15,7 @@ const Navbar = () => {
   const logoutIconRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
+    console.log(user);
     if (!navRef.current || !logoRef.current || !menuRef.current || !logoutIconRef.current) {
       return;
     }
@@ -46,7 +47,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav
+    user ? <nav
       ref={navRef}
       className="fixed top-0 left-0 w-full z-50 bg-gray-50/80 backdrop-blur-lg shadow-md"
     >
@@ -101,7 +102,7 @@ const Navbar = () => {
           
         </div>
       </div>
-    </nav>
+    </nav>:<></>
   );
 };
 
