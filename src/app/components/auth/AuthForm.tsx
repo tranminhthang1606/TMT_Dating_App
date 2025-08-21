@@ -1,4 +1,6 @@
 import { createClient } from "@/lib/supabase/client";
+import useAuthStore from "@/store/authStore";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface AuthFormProps {
@@ -8,11 +10,13 @@ interface AuthFormProps {
 export default function AuthForm({ isLogin }: AuthFormProps) {
 
   const supabase = createClient();
-  const [email,setEmail] = useState<string>('');
-  const [password,setPassword] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string>("");
-const [loading, setLoading] = useState<boolean>(false);
-  const handleAuth = async (e: React.FormEvent)=>{
+  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
+  const { user, loading: authLoading } = useAuthStore();
+  const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
 
     setLoading(true);
@@ -43,9 +47,12 @@ const [loading, setLoading] = useState<boolean>(false);
       setLoading(false);
     }
   }
-  useEffect(()=>{
+  useEffect(() => {
     setError('');
-  },[isLogin])
+    if (user && !authLoading) {
+      router.push('/');
+    }
+  }, [isLogin,user,authLoading,router])
   return (
     <form className="space-y-6" onSubmit={handleAuth}>
       <div>
@@ -55,7 +62,7 @@ const [loading, setLoading] = useState<boolean>(false);
         <input
           id="email"
           type="email"
-          onChange={(e)=>setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           required
           className="mt-1 w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none transition-all"
           placeholder="you@example.com"
@@ -69,7 +76,7 @@ const [loading, setLoading] = useState<boolean>(false);
         <input
           id="password"
           type="password"
-          onChange={(e)=>setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           required
           className="mt-1 w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-800 dark:text-white focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none transition-all"
           placeholder="••••••••"
@@ -93,10 +100,10 @@ const [loading, setLoading] = useState<boolean>(false);
       )} */}
 
       {error && (
-            <div className="text-red-600 dark:text-red-400 text-sm">
-              {error}
-            </div>
-          )}
+        <div className="text-red-600 dark:text-red-400 text-sm">
+          {error}
+        </div>
+      )}
 
       {isLogin && (
         <div className="flex items-center justify-between">
