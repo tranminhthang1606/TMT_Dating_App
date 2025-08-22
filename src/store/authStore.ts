@@ -26,8 +26,7 @@ const useAuthStore = create<AuthState>((set) => ({
             set({ loading: true });
             const { data: { user } } = await supabase.auth.getUser()
             if (!user) {
-                let { error } = await supabase.auth.signOut()
-                
+                await supabase.auth.signOut() 
             } else {
                 const {
                     data: { session },

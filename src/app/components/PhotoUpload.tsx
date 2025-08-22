@@ -93,7 +93,7 @@ export default function PhotoUpload({
       } else {
         setError(result.error ?? "Tải ảnh lên thất bại.");
       }
-    } catch (err) {
+    } catch (error) {
       setError("Thay đổi ảnh thất bại.");
     } finally {
       setUploading(false);
