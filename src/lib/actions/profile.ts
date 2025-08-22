@@ -20,6 +20,8 @@ export async function getCurrentUserProfile() {
     .eq("id", user.id)
     .single();
 
+    console.log(profile);
+
   if (error) {
     console.error("Error fetching profile:", error);
     return null;

@@ -4,6 +4,7 @@ import "./globals.css";
 
 import Navbar from "@/app/components/Navbar";
 import { AuthProvider } from "./AuthProvider";
+import ProfilePage from "./profile/page";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

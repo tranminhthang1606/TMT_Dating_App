@@ -82,11 +82,9 @@ const ProfilePage = () => {
     const profileCardRef = useRef<HTMLDivElement>(null);
     const avatarRef = useRef<HTMLDivElement>(null);
     const infoRef = useRef<HTMLDivElement>(null);
-    const aboutRef = useRef<HTMLDivElement>(null);
-    const basicInfoRef = useRef<HTMLDivElement>(null);
-    const preferencesRef = useRef<HTMLDivElement>(null);
-    const actionsRef = useRef<HTMLDivElement>(null);
-
+    const mainContentRef = useRef<HTMLDivElement>(null);
+    const sideContentRef = useRef<HTMLDivElement>(null);
+    
     useEffect(() => {
         const loadProfile = async () => {
             try {
@@ -94,16 +92,15 @@ const ProfilePage = () => {
                 if (profileData) {
                     setProfile(profileData);
                 } else {
-                    setError("Failed to load profile");
+                    setError("Không thể tải hồ sơ");
                 }
             } catch (err) {
-                console.error("Error loading profile: ", err);
-                setError("Failed to load profile");
+                console.error("Lỗi khi tải hồ sơ: ", err);
+                setError("Không thể tải hồ sơ");
             } finally {
                 setLoading(false);
             }
         };
-
         loadProfile();
     }, []);
 
@@ -119,19 +116,13 @@ const ProfilePage = () => {
             }
         });
 
-        // Hiệu ứng "bay" toàn bộ card từ dưới lên
-        tl.fromTo(profileCardRef.current, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 })
-          // Hoạt hình riêng cho avatar
-          .fromTo(avatarRef.current, { scale: 0.5, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" }, "<0.2")
-          // Hoạt hình cho phần thông tin chính
-          .fromTo(infoRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, "<0.3")
-          // Hoạt hình cho các phần nội dung
-          .fromTo([aboutRef.current, basicInfoRef.current, preferencesRef.current, actionsRef.current], { y: 20, opacity: 0 }, {
-            y: 0,
-            opacity: 1,
-            duration: 0.6,
-            stagger: 0.2,
-          }, "-=0.2");
+        // Hoạt hình toàn bộ card xuất hiện
+        tl.fromTo(profileCardRef.current, { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1 })
+            // Hoạt hình riêng cho avatar
+            .fromTo(avatarRef.current, { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" }, "<0.2")
+            // Hoạt hình cho thông tin chính và bên lề cùng lúc
+            .fromTo(mainContentRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, "<0.3")
+            .fromTo(sideContentRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, "<");
 
     }, [profile]);
 
@@ -141,7 +132,7 @@ const ProfilePage = () => {
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-500 mx-auto"></div>
                     <p className="mt-4 text-gray-700">
-                        Loading your profile...
+                        Đang tải hồ sơ...
                     </p>
                 </div>
             </div>
@@ -151,21 +142,21 @@ const ProfilePage = () => {
     if (error || !profile) {
         return (
             <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
-                <div className="text-center max-w-md mx-auto p-8 rounded-2xl  shadow-lg">
+                <div className="text-center max-w-md mx-auto p-8 rounded-2xl shadow-lg">
                     <div className="w-24 h-24 bg-gradient-to-r from-orange-400 to-rose-500 rounded-full flex items-center justify-center mx-auto mb-6">
                         <XMarkIcon className="w-12 h-12 text-white" />
                     </div>
                     <h2 className="text-2xl font-bold text-gray-700 mb-4">
-                        Profile not found
+                        Không tìm thấy hồ sơ
                     </h2>
                     <p className="text-gray-600 mb-6">
-                        {error || "Unable to load your profile. Please try again."}
+                        {error || "Không thể tải hồ sơ của bạn. Vui lòng thử lại."}
                     </p>
                     <button
                         onClick={() => window.location.reload()}
                         className="bg-gradient-to-r from-rose-500 to-orange-400 text-white font-semibold py-3 px-6 rounded-full hover:from-rose-600 hover:to-orange-500 transition-all duration-200"
                     >
-                        Retry
+                        Thử lại
                     </button>
                 </div>
             </div>
@@ -173,165 +164,157 @@ const ProfilePage = () => {
     }
 
     return (
-        <div className="flex justify-center items-center min-h-screen p-4 bg-gradient-to-br from-pink-50 to-red-50">
-          <div ref={profileCardRef} className="w-full max-w-4xl opacity-0">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Cột chính */}
-              <div className="lg:col-span-2">
-                <div className="bg-white rounded-2xl shadow-lg p-8">
-                  <div className="flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6 mb-8">
-                    <div ref={avatarRef} className="relative">
-                      <div className="w-28 h-28 rounded-full overflow-hidden border-4 border-rose-500 shadow-lg">
-                        <img
-                          src={profile.avatar_url || "/default-avatar.png"}
-                          alt={profile.full_name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    </div>
-
-                    <div ref={infoRef} className="flex-1 text-center sm:text-left">
-                      <h2 className="text-3xl font-bold text-gray-700 mb-1">
-                        {profile.full_name}, {calculateAge(profile.birthdate)}
-                      </h2>
-                      <p className="text-gray-600 mb-2">
-                        @{profile.username}
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        Thành viên từ{" "}
-                        {new Date(profile.created_at).toLocaleDateString()}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="space-y-8">
-                    <div ref={aboutRef}>
-                      <h3 className="text-lg font-semibold text-gray-700 mb-3">
-                        Giới thiệu
-                      </h3>
-                      <p className="text-gray-700 leading-relaxed">
-                        {profile.bio || "Chưa có giới thiệu."}
-                      </p>
-                    </div>
-
-                    <div ref={basicInfoRef}>
-                      <h3 className="text-lg font-semibold text-gray-700 mb-3">
-                        Thông tin cơ bản
-                      </h3>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Giới tính
-                          </label>
-                          <p className="text-gray-700 capitalize">
-                            {profile.gender}
-                          </p>
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Ngày sinh
-                          </label>
-                          <p className="text-gray-700">
-                            {new Date(profile.birthdate).toLocaleDateString()}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div ref={preferencesRef}>
-                      <h3 className="text-lg font-semibold text-gray-700 mb-3">
-                        Sở thích hẹn hò
-                      </h3>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Độ tuổi
-                          </label>
-                          <p className="text-gray-700">
-                            {profile.preferences.age_range.min} -{" "}
-                            {profile.preferences.age_range.max} tuổi
-                          </p>
-                        </div>
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Khoảng cách
-                          </label>
-                          <p className="text-gray-700">
-                            Lên tới {profile.preferences.distance} km
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Cột phụ */}
-              <div className="space-y-6">
-                <div ref={actionsRef} className="bg-white rounded-2xl shadow-lg p-6">
-                  <h3 className="text-lg font-semibold text-gray-700 mb-4">
-                    Tác vụ nhanh
-                  </h3>
-                  <div className="space-y-3">
-                    <Link
-                      href="/profile/edit"
-                      className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 transition-colors duration-200"
-                    >
-                      <div className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center">
-                          <svg
-                            className="w-4 h-4 text-white"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+        <div className="pt-24 min-h-screen flex flex-col items-center p-4 bg-gradient-to-br from-pink-50 to-red-50">
+            <header className="text-center mb-8">
+                <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-500 mb-2">
+                    Hồ sơ của tôi
+                </h1>
+                <p className="text-gray-600">
+                    Quản lý hồ sơ và sở thích của bạn
+                </p>
+            </header>
+            <div ref={profileCardRef} className="w-full max-w-5xl opacity-0">
+                <div className="bg-white rounded-3xl shadow-2xl p-8 lg:p-12 space-y-8">
+                    {/* Phần trên cùng: Avatar và Bio */}
+                    <div className="flex flex-col lg:flex-row items-center lg:items-start lg:space-x-8">
+                        <div ref={avatarRef} className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-rose-500 shadow-lg flex-shrink-0">
+                            <img
+                                src={profile.avatar_url || "/default-avatar.png"}
+                                alt={profile.full_name}
+                                className="w-full h-full object-cover"
                             />
-                          </svg>
+                            {profile.is_online && (
+                                <span className="absolute bottom-1 right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white"></span>
+                            )}
                         </div>
-                        <span className="text-gray-700">
-                          Chỉnh sửa hồ sơ
-                        </span>
-                      </div>
-                      <svg
-                        className="w-5 h-5 text-gray-400"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 5l7 7-7 7"
-                        />
-                      </svg>
-                    </Link>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-2xl shadow-lg p-6">
-                  <h3 className="text-lg font-semibold text-gray-700 mb-4">
-                    Tài khoản
-                  </h3>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between p-3 rounded-lg bg-gray-50">
-                      <span className="text-gray-700">
-                        Tên đăng nhập
-                      </span>
-                      <span className="text-gray-500">
-                        @{profile.username}
-                      </span>
+                        
+                        <div ref={infoRef} className="flex-1 mt-6 lg:mt-0 text-center lg:text-left">
+                            <div className="flex justify-center lg:justify-start items-center space-x-2">
+                                <h2 className="text-4xl font-extrabold text-gray-900 leading-tight">
+                                    {profile.full_name}, {calculateAge(profile.birthdate)}
+                                </h2>
+                                {profile.is_verified && (
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-blue-500">
+                                        <path fillRule="evenodd" d="M8.603 3.799A4.49 4.49 0 0 1 12 2.25c1.416 0 2.78.608 3.797 1.549L17.5 5.25a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-.75.75l-.997.996a.75.75 0 0 0-.215.534V12a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1-.75-.75v-.215a.75.75 0 0 0-.534-.215H8.75a.75.75 0 0 1-.75-.75V8.25a.75.75 0 0 1 .75-.75h.215a.75.75 0 0 0 .534-.215L10.5 6.75a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 .75.75v.215a.75.75 0 0 0 .534.215H15a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-.75.75h-.215a.75.75 0 0 0-.534.215L12 11.25a.75.75 0 0 0-.534.215v.215a.75.75 0 0 1-.75.75h-1.5a.75.75 0 0 1-.75-.75v-.215a.75.75 0 0 0-.534-.215L5.25 10.5a.75.75 0 0 1-.75-.75V8.25a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 0 .75-.75V6a.75.75 0 0 1 .75-.75h.215a.75.75 0 0 0 .534-.215L8.603 3.799Z" clipRule="evenodd" />
+                                    </svg>
+                                )}
+                            </div>
+                            <p className="text-xl text-gray-600 mt-1">
+                                @{profile.username}
+                            </p>
+                            <p className="mt-4 text-gray-700 leading-relaxed text-lg">
+                                {profile.bio || "Chưa có giới thiệu."}
+                            </p>
+                        </div>
                     </div>
-                  </div>
+
+                    <div className="border-b border-gray-200 pb-8"></div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        {/* Cột chính - Thông tin */}
+                        <div ref={mainContentRef} className="lg:col-span-2 space-y-8">
+                            <div>
+                                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                                    Thông tin chi tiết
+                                </h3>
+                                <div className="space-y-6">
+                                    <div>
+                                        <h4 className="text-lg font-semibold text-gray-700 mb-2">Thông tin cơ bản</h4>
+                                        <div className="grid grid-cols-2 gap-4 text-gray-600">
+                                            <div>
+                                                <span className="font-medium">Giới tính:</span> <span className="capitalize">{profile.gender}</span>
+                                            </div>
+                                            <div>
+                                                <span className="font-medium">Ngày sinh:</span> <span>{new Date(profile.birthdate).toLocaleDateString()}</span>
+                                            </div>
+                                            <div>
+                                                <span className="font-medium">Tuổi:</span> <span>{calculateAge(profile.birthdate)}</span>
+                                            </div>
+                                            <div>
+                                                <span className="font-medium">Tham gia:</span> <span>{new Date(profile.created_at).toLocaleDateString()}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h4 className="text-lg font-semibold text-gray-700 mb-2">Sở thích hẹn hò</h4>
+                                        <div className="grid grid-cols-2 gap-4 text-gray-600">
+                                            <div>
+                                                <span className="font-medium">Độ tuổi:</span> <span>{profile.preferences.age_range.min} - {profile.preferences.age_range.max} tuổi</span>
+                                            </div>
+                                            <div>
+                                                <span className="font-medium">Khoảng cách:</span> <span>Lên tới {profile.preferences.distance} km</span>
+                                            </div>
+                                            <div>
+                                                <span className="font-medium">Ưu tiên giới tính:</span> <span className="capitalize">{profile.preferences.gender_preference.join(", ")}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Cột bên lề - Tác vụ và Tài khoản */}
+                        <div ref={sideContentRef} className="lg:col-span-1 space-y-6">
+                            <div className="bg-gray-50 rounded-2xl p-6 shadow-inner">
+                                <h3 className="text-xl font-bold text-gray-800 mb-4">Tác vụ nhanh</h3>
+                                <div className="space-y-4">
+                                    <Link
+                                        href="/profile/edit"
+                                        className="flex items-center justify-between p-4 rounded-xl bg-white shadow-sm hover:bg-gray-100 transition-colors duration-200 group"
+                                    >
+                                        <div className="flex items-center space-x-4">
+                                            <div className="w-10 h-10 rounded-full bg-rose-500 flex items-center justify-center text-white group-hover:rotate-12 transition-transform">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.23-8.23zM21.75 18v.5c0 .717-.384 1.405-1.006 1.855l-5.658 4.244a1.875 1.875 0 01-2.484 0l-5.658-4.244A2.25 2.25 0 011.5 18.5V18" />
+                                                </svg>
+                                            </div>
+                                            <span className="text-gray-800 font-medium">Chỉnh sửa hồ sơ</span>
+                                        </div>
+                                        <svg
+                                            className="w-5 h-5 text-gray-400 group-hover:translate-x-1 transition-transform"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M9 5l7 7-7 7"
+                                            />
+                                        </svg>
+                                    </Link>
+                                    <button
+                                        className="flex items-center justify-between p-4 rounded-xl bg-white shadow-sm hover:bg-gray-100 transition-colors duration-200 group w-full"
+                                    >
+                                        <div className="flex items-center space-x-4">
+                                            <div className="w-10 h-10 rounded-full bg-orange-400 flex items-center justify-center text-white group-hover:rotate-12 transition-transform">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9.75v6.75m0 0l-3-3m3 3l3-3M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                            </div>
+                                            <span className="text-gray-800 font-medium">Đăng xuất</span>
+                                        </div>
+                                        <svg
+                                            className="w-5 h-5 text-gray-400 group-hover:translate-x-1 transition-transform"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth={2}
+                                                d="M9 5l7 7-7 7"
+                                            />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
     );
 };
