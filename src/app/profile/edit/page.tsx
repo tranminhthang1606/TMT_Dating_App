@@ -116,7 +116,7 @@ export default function EditProfilePage() {
     }
 
     loadProfile();
-  }, [router]);
+  }, [loading]);
 
   async function handleFormSubmit(e: React.FormEvent) {
     e.preventDefault();
