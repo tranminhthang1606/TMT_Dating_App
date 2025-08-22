@@ -50,7 +50,7 @@ const calculateAge = (birthdate: string): number => {
     return age;
 };
 
-// Component chính
+
 export default function EditProfilePage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -66,7 +66,7 @@ export default function EditProfilePage() {
     avatar_url: "",
   });
 
-  // GSAP Refs
+  
   const formRef = useRef<HTMLFormElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const avatarSectionRef = useRef<HTMLDivElement>(null);
@@ -89,7 +89,7 @@ export default function EditProfilePage() {
             avatar_url: profileData.avatar_url || "",
           });
 
-          // Chạy GSAP animation sau khi dữ liệu đã tải xong
+          
           const tl = gsap.timeline({
             defaults: { ease: Power2.easeOut },
           });
