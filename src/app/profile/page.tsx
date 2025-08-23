@@ -6,6 +6,7 @@ import { gsap } from "gsap";
 import { Power2 } from "gsap/all";
 import { ArrowPathIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { getCurrentUserProfile } from "@/lib/actions/profile";
+import useAuthStore from "@/store/authStore";
 
 // Giả lập các hàm và kiểu dữ liệu từ bên ngoài
 // Bạn cần đảm bảo các hàm này có sẵn trong dự án của bạn
@@ -78,7 +79,7 @@ const ProfilePage = () => {
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
+    const {signOut} = useAuthStore();
     // GSAP refs cho các phần tử
     const profileCardRef = useRef<HTMLDivElement>(null);
     const avatarRef = useRef<HTMLDivElement>(null);
@@ -286,7 +287,8 @@ const ProfilePage = () => {
                                         </svg>
                                     </Link>
                                     <button
-                                        className="flex items-center justify-between p-4 rounded-xl bg-white shadow-sm hover:bg-gray-100 transition-colors duration-200 group w-full"
+                                        onClick={signOut}
+                                        className="flex items-center justify-between p-4 rounded-xl cursor-pointer bg-white shadow-sm hover:bg-gray-100 transition-colors duration-200 group w-full"
                                     >
                                         <div className="flex items-center space-x-4">
                                             <div className="w-10 h-10 rounded-full bg-orange-400 flex items-center justify-center text-white group-hover:rotate-12 transition-transform">
