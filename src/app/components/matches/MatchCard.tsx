@@ -3,7 +3,7 @@ import { calculateAge } from "@/lib/helpers/calculate-age";
 import Image from "next/image";
 export default function MatchCard({ user }: { user: UserProfile }) {
   return (
-    <div className="relative w-full max-w-sm mx-auto">
+    <div className="relative w-full mx-auto">
       <div className="card-swipe aspect-[3/4] overflow-hidden">
         <div className="relative w-full h-full">
           <Image
