@@ -5,6 +5,8 @@ import Link from "next/link";
 import { gsap } from "gsap";
 import { Power2 } from "gsap/all";
 import { ArrowPathIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { getCurrentUserProfile } from "@/lib/actions/profile";
+import useAuthStore from "@/store/authStore";
 
 // Giả lập các hàm và kiểu dữ liệu từ bên ngoài
 // Bạn cần đảm bảo các hàm này có sẵn trong dự án của bạn
@@ -36,30 +38,30 @@ export interface UserPreferences {
     gender_preference: ("male" | "female" | "other")[];
 }
 
-const getCurrentUserProfile = async (): Promise<UserProfile | null> => {
-    // Giả lập dữ liệu hồ sơ
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    return {
-        id: "12345",
-        full_name: "Jane Doe",
-        username: "janedoe",
-        email: "jane.doe@example.com",
-        gender: "female",
-        birthdate: "2000-05-15T00:00:00.000Z",
-        bio: "Lover of art, music, and spontaneous adventures. Looking for a genuine connection and someone to share a laugh with.",
-        avatar_url: "https://placehold.co/160x160/F472B6/FFFFFF?text=Ava",
-        preferences: {
-            age_range: { min: 20, max: 30 },
-            distance: 50,
-            gender_preference: ["male"],
-        },
-        last_active: "2024-05-20T10:00:00.000Z",
-        is_verified: true,
-        is_online: true,
-        created_at: "2023-01-10T00:00:00.000Z",
-        updated_at: "2024-05-20T10:00:00.000Z",
-    };
-};
+// const getCurrentUserProfile = async (): Promise<UserProfile | null> => {
+//     // Giả lập dữ liệu hồ sơ
+//     await new Promise(resolve => setTimeout(resolve, 1500));
+//     return {
+//         id: "12345",
+//         full_name: "Jane Doe",
+//         username: "janedoe",
+//         email: "jane.doe@example.com",
+//         gender: "female",
+//         birthdate: "2000-05-15T00:00:00.000Z",
+//         bio: "Lover of art, music, and spontaneous adventures. Looking for a genuine connection and someone to share a laugh with.",
+//         avatar_url: "https://placehold.co/160x160/F472B6/FFFFFF?text=Ava",
+//         preferences: {
+//             age_range: { min: 20, max: 30 },
+//             distance: 50,
+//             gender_preference: ["male"],
+//         },
+//         last_active: "2024-05-20T10:00:00.000Z",
+//         is_verified: true,
+//         is_online: true,
+//         created_at: "2023-01-10T00:00:00.000Z",
+//         updated_at: "2024-05-20T10:00:00.000Z",
+//     };
+// };
 
 const calculateAge = (birthdate: string): number => {
     const today = new Date();
@@ -77,7 +79,7 @@ const ProfilePage = () => {
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-
+    const {signOut} = useAuthStore();
     // GSAP refs cho các phần tử
     const profileCardRef = useRef<HTMLDivElement>(null);
     const avatarRef = useRef<HTMLDivElement>(null);
@@ -285,7 +287,8 @@ const ProfilePage = () => {
                                         </svg>
                                     </Link>
                                     <button
-                                        className="flex items-center justify-between p-4 rounded-xl bg-white shadow-sm hover:bg-gray-100 transition-colors duration-200 group w-full"
+                                        onClick={signOut}
+                                        className="flex items-center justify-between p-4 rounded-xl cursor-pointer bg-white shadow-sm hover:bg-gray-100 transition-colors duration-200 group w-full"
                                     >
                                         <div className="flex items-center space-x-4">
                                             <div className="w-10 h-10 rounded-full bg-orange-400 flex items-center justify-center text-white group-hover:rotate-12 transition-transform">

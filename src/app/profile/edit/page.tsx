@@ -50,7 +50,7 @@ const calculateAge = (birthdate: string): number => {
     return age;
 };
 
-// Component chính
+
 export default function EditProfilePage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -66,7 +66,7 @@ export default function EditProfilePage() {
     avatar_url: "",
   });
 
-  // GSAP Refs
+  
   const formRef = useRef<HTMLFormElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const avatarSectionRef = useRef<HTMLDivElement>(null);
@@ -89,7 +89,7 @@ export default function EditProfilePage() {
             avatar_url: profileData.avatar_url || "",
           });
 
-          // Chạy GSAP animation sau khi dữ liệu đã tải xong
+          
           const tl = gsap.timeline({
             defaults: { ease: Power2.easeOut },
           });
@@ -116,7 +116,7 @@ export default function EditProfilePage() {
     }
 
     loadProfile();
-  }, [router]);
+  }, [loading]);
 
   async function handleFormSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -232,7 +232,7 @@ export default function EditProfilePage() {
                     value={formData.full_name}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    className="w-full px-4 text-gray-700 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                     placeholder="Nhập họ và tên của bạn"
                   />
                 </div>
@@ -247,7 +247,7 @@ export default function EditProfilePage() {
                     value={formData.username}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    className="w-full text-gray-700 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                     placeholder="Chọn một tên người dùng"
                   />
                 </div>
@@ -261,7 +261,7 @@ export default function EditProfilePage() {
                     value={formData.gender}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    className="w-full text-gray-700 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                   >
                     <option value="male">Nam</option>
                     <option value="female">Nữ</option>
@@ -279,7 +279,7 @@ export default function EditProfilePage() {
                     value={formData.birthdate}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    className="w-full text-gray-700 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
                   />
                 </div>
               </div>
@@ -298,7 +298,7 @@ export default function EditProfilePage() {
                 required
                 rows={4}
                 maxLength={500}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent resize-none"
+                className="w-full text-gray-700 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent resize-none"
                 placeholder="Chia sẻ một chút về bản thân..."
               />
               <p className="text-xs text-gray-500 mt-1">
