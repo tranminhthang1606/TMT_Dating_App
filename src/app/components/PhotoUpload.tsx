@@ -101,6 +101,7 @@ export default function PhotoUpload({
   }
 
   function handleClick() {
+    setError('');
     fileInputRef.current?.click();
   }
 
