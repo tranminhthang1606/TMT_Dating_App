@@ -122,7 +122,7 @@ export default function MatchesPage() {
       <div className="h-full bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500  mx-auto"></div>
-          <p className="mt-4 bg-gradient-to-r from-pink-500 to-rose-500">Đang tìm kiếm...</p>
+          <p className="mt-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-500">Đang tìm kiếm...</p>
         </div>
       </div>
     )
