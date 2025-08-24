@@ -121,8 +121,8 @@ export default function MatchesPage() {
     return (
       <div className="h-full bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Đang tìm kiếm...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500  mx-auto"></div>
+          <p className="mt-4 bg-gradient-to-r from-pink-500 to-rose-500">Đang tìm kiếm...</p>
         </div>
       </div>
     )
@@ -135,7 +135,7 @@ export default function MatchesPage() {
           <div className="w-24 h-24 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
             <span className="text-4xl">💕</span>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Không còn hồ sơ nào</h2>
+          <h2 className="text-2xl font-bold  mb-4">Không còn hồ sơ nào</h2>
           <p className="text-gray-600 mb-6">Hãy quay lại sau, hoặc thử thay đổi sở thích của bạn!</p>
           <button
             onClick={() => router.refresh()}
@@ -166,12 +166,12 @@ export default function MatchesPage() {
   }
 
   return (
-    <div className="h-full pt-24 pb-8 flex flex-col items-center bg-gradient-to-br from-pink-50 to-red-50">
+    <div className="h-full pt-24 pb-8 flex flex-col items-center ">
       <div>
         <header ref={headerRef} className="mb-8 opacity-0">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Tìm kiếm Match</h1>
-            <p className="text-gray-600">
+            <h1 className="text-3xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-500">Tìm kiếm Match</h1>
+            <p className="">
               {currentIndex + 1} / {potentialMatches.length} hồ sơ
             </p>
           </div>
