@@ -72,7 +72,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="/matches/list"
+                href="/list-matches"
                 className="text-gray-700 hover:text-rose-500 transition-colors duration-300"
               >
                 Kết nối
