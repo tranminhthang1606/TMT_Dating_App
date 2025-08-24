@@ -47,7 +47,7 @@ export default function RootLayout({
         className={`${playfair.variable} ${sourceSans.variable} antialiased h-full`}
       >
         <AuthProvider >
-          <div className="h-full flex flex-col">
+          <div className="h-full flex flex-col bg-gradient-to-br from-pink-100 to-red-100 dark:from-gray-900 dark:to-gray-800 dark:text-red-50 ">
             <Navbar/>
             {children}
           </div>

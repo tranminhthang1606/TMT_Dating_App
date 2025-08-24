@@ -133,7 +133,7 @@ const ProfilePage = () => {
             <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-500 mx-auto"></div>
-                    <p className="mt-4 text-gray-700">
+                    <p className="mt-4 ">
                         Đang tải hồ sơ...
                     </p>
                 </div>
@@ -143,12 +143,12 @@ const ProfilePage = () => {
 
     if (error || !profile) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
+            <div className="min-h-screen flex items-center justify-center">
                 <div className="text-center max-w-md mx-auto p-8 rounded-2xl shadow-lg">
                     <div className="w-24 h-24 bg-gradient-to-r from-orange-400 to-rose-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <XMarkIcon className="w-12 h-12 text-white" />
+                        <XMarkIcon className="w-12 h-12 " />
                     </div>
-                    <h2 className="text-2xl font-bold text-gray-700 mb-4">
+                    <h2 className="text-2xl font-bold mb-4">
                         Không tìm thấy hồ sơ
                     </h2>
                     <p className="text-gray-600 mb-6">
@@ -156,7 +156,7 @@ const ProfilePage = () => {
                     </p>
                     <button
                         onClick={() => window.location.reload()}
-                        className="bg-gradient-to-r from-rose-500 to-orange-400 text-white font-semibold py-3 px-6 rounded-full hover:from-rose-600 hover:to-orange-500 transition-all duration-200"
+                        className="bg-gradient-to-r from-rose-500 to-orange-400  font-semibold py-3 px-6 rounded-full hover:from-rose-600 hover:to-orange-500 transition-all duration-200"
                     >
                         Thử lại
                     </button>
@@ -166,12 +166,12 @@ const ProfilePage = () => {
     }
 
     return (
-        <div className="pt-24 min-h-screen flex flex-col items-center p-4 bg-gradient-to-br from-pink-50 to-red-50">
+        <div className="pt-24 min-h-screen flex flex-col items-center p-4">
             <header className="text-center mb-8">
                 <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-500 mb-2">
                     Hồ sơ của tôi
                 </h1>
-                <p className="text-gray-600">
+                <p className="">
                     Quản lý hồ sơ và sở thích của bạn
                 </p>
             </header>
@@ -265,7 +265,7 @@ const ProfilePage = () => {
                                         className="flex items-center justify-between p-4 rounded-xl bg-white shadow-sm hover:bg-gray-100 transition-colors duration-200 group"
                                     >
                                         <div className="flex items-center space-x-4">
-                                            <div className="w-10 h-10 rounded-full bg-rose-500 flex items-center justify-center text-white group-hover:rotate-12 transition-transform">
+                                            <div className="w-10 h-10 rounded-full bg-rose-500 flex items-center justify-center  group-hover:rotate-12 transition-transform">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.23-8.23zM21.75 18v.5c0 .717-.384 1.405-1.006 1.855l-5.658 4.244a1.875 1.875 0 01-2.484 0l-5.658-4.244A2.25 2.25 0 011.5 18.5V18" />
                                                 </svg>
@@ -291,7 +291,7 @@ const ProfilePage = () => {
                                         className="flex items-center justify-between p-4 rounded-xl cursor-pointer bg-white shadow-sm hover:bg-gray-100 transition-colors duration-200 group w-full"
                                     >
                                         <div className="flex items-center space-x-4">
-                                            <div className="w-10 h-10 rounded-full bg-orange-400 flex items-center justify-center text-white group-hover:rotate-12 transition-transform">
+                                            <div className="w-10 h-10 rounded-full bg-orange-400 flex items-center justify-center  group-hover:rotate-12 transition-transform">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 9.75v6.75m0 0l-3-3m3 3l3-3M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                 </svg>
