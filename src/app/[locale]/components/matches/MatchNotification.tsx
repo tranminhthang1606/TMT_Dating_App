@@ -1,4 +1,4 @@
-import { UserProfile } from "@/app/profile/page";
+import { UserProfile } from "@/app/[locale]/profile/page";
 import { useEffect, useState } from "react";
 
 interface MatchNotificationProps {
