@@ -6,6 +6,7 @@ import { Power2 } from 'gsap/all';
 import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import useAuthStore from '@/store/authStore';
+import LocaleSwitcher from './LocaleSwitcher';
 
 const Navbar = () => {
   const { signOut, user } = useAuthStore();
@@ -99,6 +100,8 @@ const Navbar = () => {
           <button ref={logoutIconRef} title="Đăng xuất" onClick={signOut}>
             <ArrowRightOnRectangleIcon className="h-6 w-6 text-rose-500 hover:text-orange-400 transition-colors duration-300" />
           </button>
+          <LocaleSwitcher/>
+          
           
         </div>
       </div>

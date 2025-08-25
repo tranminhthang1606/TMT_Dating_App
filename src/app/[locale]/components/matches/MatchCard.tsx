@@ -1,4 +1,4 @@
-import { UserProfile } from "@/app/profile/page";
+import { UserProfile } from "@/app/[locale]/profile/page";
 import { calculateAge } from "@/lib/helpers/calculate-age";
 import Image from "next/image";
 export default function MatchCard({ user }: { user: UserProfile }) {

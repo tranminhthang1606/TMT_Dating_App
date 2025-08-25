@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Playfair_Display, Source_Sans_3 } from "next/font/google"
-import Navbar from "@/app/components/Navbar";
+import Navbar from "@/app/[locale]/components/Navbar";
 import { AuthProvider } from "./AuthProvider";
 import ProfilePage from "./profile/page";
+import { NextIntlClientProvider } from "next-intl";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,11 +48,12 @@ export default function RootLayout({
         className={`${playfair.variable} ${sourceSans.variable} antialiased h-full`}
       >
         <AuthProvider >
-          <div className="h-full flex flex-col bg-gradient-to-br from-pink-50 to-red-50 dark:from-gray-900 dark:to-gray-800 dark:text-red-50 ">
-            <Navbar/>
-            {children}
-          </div>
-
+          <NextIntlClientProvider>
+            <div className="h-full flex flex-col bg-gradient-to-br from-pink-50 to-red-50 dark:from-gray-900 dark:to-gray-800 dark:text-red-50 ">
+              <Navbar />
+              {children}
+            </div>
+          </NextIntlClientProvider>
         </AuthProvider>
       </body>
     </html>
