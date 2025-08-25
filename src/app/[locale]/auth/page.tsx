@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import AuthForm from '@/app/components/auth/AuthForm';
-import SocialLogin from '@/app/components/auth/SocialLogin';
+import AuthForm from '@/app/[locale]/components/auth/AuthForm';
+import SocialLogin from '@/app/[locale]/components/auth/SocialLogin';
 
 export default function AuthPage() {
   const [isLogin, setIsLogin] = useState<boolean>(true);
