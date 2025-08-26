@@ -48,7 +48,7 @@ export default function ChatHeader({ user, onVideoCall }: ChatHeaderProps) {
               <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white dark:border-gray-800 rounded-full"></div>
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <h2 className="text-md font-semibold text-gray-900 dark:text-white">
                 {user.full_name}, {calculateAge(user.birthdate)}
               </h2>
               <p className="text-sm text-gray-500 dark:text-gray-400">

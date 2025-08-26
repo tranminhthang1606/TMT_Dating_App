@@ -99,7 +99,7 @@ export default function ChatPage() {
 
   return (
     <div className="h-[calc(100vh-64px)] mt-24 bg-gradient-to-br from-pink-50 to-red-50 dark:from-gray-900 dark:to-gray-800">
-      <div className="container mx-auto px-4 py-8 h-full flex flex-col lg:flex-row">
+      <div className="container mx-auto px-4 py-8 h-[calc(90vh-64px)] flex flex-col lg:flex-row">
         {/* Left Column: Chat List */}
        <div className={`w-full lg:w-1/3 max-w-2xl mx-auto lg:mx-0 lg:h-full lg:flex lg:flex-col ${id ? 'hidden lg:block' : ''}`}>
           <header className="text-center mb-8">

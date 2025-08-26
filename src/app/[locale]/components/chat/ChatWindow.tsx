@@ -49,7 +49,7 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
         if (user) {
             loadUserData();
         }
-    }, [userId, router, user]);
+    }, [userId, router, user,chatInterfaceRef]);
 
     if (loading) {
         return (
@@ -89,8 +89,8 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
     }
 
     return (
-        <div className="lg:flex w-full lg:ml-8 mt-8 lg:mt-0 items-center justify-center bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
-            <div className="w-full h-full flex flex-col">
+        <div className="lg:flex w-full lg:ml-8 lg:mt-0 items-center justify-center bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
+            <div className="w-full lg:h-full h-[400px] overflow-hidden flex flex-col">
                 <ChatHeader
                     user={otherUser}
                     onVideoCall={() => {

@@ -7,12 +7,13 @@ import { calculateAge } from "@/lib/helpers/calculate-age";
 import { gsap } from "gsap";
 import { Power2 } from "gsap/all";
 import Image from "next/image";
+import { useLocale } from "next-intl";
 
 export default function MatchesListPage() {
   const [matches, setMatches] = useState<UserProfile[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
+  const locale = useLocale();
   const headerRef = useRef<HTMLDivElement>(null);
   const matchesListRef = useRef<HTMLDivElement>(null);
 
@@ -84,7 +85,7 @@ export default function MatchesListPage() {
               Hãy bắt đầu vuốt để tìm match phù hợp!
             </p>
             <Link
-              href="/matches"
+              href={`/${locale}/matches`}
               className="bg-gradient-to-r from-pink-500 to-red-500 text-white font-semibold py-3 px-6 rounded-full hover:from-pink-600 hover:to-red-600 transition-all duration-200"
             >
               Bắt đầu vuốt
@@ -96,7 +97,7 @@ export default function MatchesListPage() {
               {matches.map((match, key) => (
                 <Link
                   key={key}
-                  href={`/chat/${match.id}`}
+                  href={`/${locale}/chat?id=${match.id}`}
                   className="flex-shrink-0 w-64 bg-white dark:bg-gray-800 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-200 hover:scale-105"
                 >
                   <div className="relative aspect-[4/5] w-full rounded-t-3xl overflow-hidden">
