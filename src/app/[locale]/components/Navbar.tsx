@@ -7,7 +7,9 @@ import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import useAuthStore from '@/store/authStore';
 import LocaleSwitcher from './LocaleSwitcher';
+
 import { useLocale, useTranslations } from 'next-intl';
+
 
 const Navbar = () => {
   const { signOut, user } = useAuthStore();

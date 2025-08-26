@@ -7,7 +7,9 @@ import { calculateAge } from "@/lib/helpers/calculate-age";
 import { gsap } from "gsap";
 import { Power2 } from "gsap/all";
 import Image from "next/image";
+
 import { useLocale, useTranslations } from "next-intl";
+
 
 export default function MatchesListPage() {
   const [matches, setMatches] = useState<UserProfile[]>([]);
