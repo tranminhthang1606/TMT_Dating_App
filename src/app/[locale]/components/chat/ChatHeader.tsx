@@ -2,7 +2,7 @@
 
 import { UserProfile } from "@/app/[locale]/profile/page";
 import { calculateAge } from "@/lib/helpers/calculate-age";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 interface ChatHeaderProps {
@@ -12,6 +12,7 @@ interface ChatHeaderProps {
 export default function ChatHeader({ user, onVideoCall }: ChatHeaderProps) {
   const router = useRouter();
   const locale = useLocale();
+  const t = useTranslations('Chat');
   return (
     <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 w-full">
       <div className="flex items-center justify-between">
@@ -62,7 +63,7 @@ export default function ChatHeader({ user, onVideoCall }: ChatHeaderProps) {
           <button
             onClick={onVideoCall}
             className="p-3 rounded-full bg-gradient-to-r from-pink-500 to-red-500 text-white hover:from-pink-600 hover:to-red-600 transition-all duration-200 shadow-lg hover:shadow-xl"
-            title="Start Video Call"
+            title={t('startVideoCall')}
           >
             <svg
               className="w-5 h-5"

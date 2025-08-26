@@ -7,13 +7,14 @@ import { calculateAge } from "@/lib/helpers/calculate-age";
 import { gsap } from "gsap";
 import { Power2 } from "gsap/all";
 import Image from "next/image";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export default function MatchesListPage() {
   const [matches, setMatches] = useState<UserProfile[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const locale = useLocale();
+  const t = useTranslations('MatchesList');
   const headerRef = useRef<HTMLDivElement>(null);
   const matchesListRef = useRef<HTMLDivElement>(null);
 
@@ -53,9 +54,7 @@ export default function MatchesListPage() {
       <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center pt-24">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-400">
-            Đang tải danh sách match...
-          </p>
+          <p className="mt-4 text-gray-600 dark:text-gray-400">{t('loading')}</p>
         </div>
       </div>
     );
@@ -65,11 +64,9 @@ export default function MatchesListPage() {
     <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 dark:from-gray-900 dark:to-gray-800 pt-24">
       <div className="container mx-auto px-4 py-8">
         <header ref={headerRef} className="text-center mb-8">
-          <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">
-            Các Match của bạn
-          </h1>
+          <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white mb-2">{t('title')}</h1>
           <p className="text-lg text-gray-600 dark:text-gray-400">
-            {matches.length} match{matches.length !== 1 ? "" : ""}
+            {t('count', {count: matches.length})}
           </p>
         </header>
 
@@ -78,17 +75,13 @@ export default function MatchesListPage() {
             <div className="w-24 h-24 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
               <span className="text-4xl">💕</span>
             </div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-              Bạn chưa có match nào
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
-              Hãy bắt đầu vuốt để tìm match phù hợp!
-            </p>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">{t('emptyTitle')}</h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-6">{t('emptyDesc')}</p>
             <Link
               href={`/${locale}/matches`}
               className="bg-gradient-to-r from-pink-500 to-red-500 text-white font-semibold py-3 px-6 rounded-full hover:from-pink-600 hover:to-red-600 transition-all duration-200"
             >
-              Bắt đầu vuốt
+              {t('startSwiping')}
             </Link>
           </div>
         ) : (
@@ -117,9 +110,7 @@ export default function MatchesListPage() {
                     </div>
                   </div>
                   <div className="p-4">
-                    <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
-                      {match.bio || "Chưa có giới thiệu."}
-                    </p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">{match.bio || t('noBio')}</p>
                   </div>
                 </Link>
               ))}
