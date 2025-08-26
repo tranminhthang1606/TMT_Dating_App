@@ -1,5 +1,54 @@
 {
   "HomePage": {
-    "title": "Chào"
+    "title": "Chào thế giới!"
+  },
+  "Navbar": {
+    "brand": "Matcha",
+    "explore": "Khám phá",
+    "connections": "Kết nối",
+    "messages": "Tin nhắn",
+    "profile": "Hồ sơ",
+    "logout": "Đăng xuất"
+  },
+  "Chat": {
+    "loadingMatches": "Đang tải các cặp đôi của bạn...",
+    "title": "Tin nhắn",
+    "conversationsCount": "{count} cuộc trò chuyện",
+    "noConversationsTitle": "Chưa có cuộc trò chuyện nào",
+    "noConversationsDesc": "Hãy bắt đầu vuốt để tìm các cặp đôi và bắt đầu trò chuyện!",
+    "startSwiping": "Bắt đầu Vuốt",
+    "settingUp": "Đang thiết lập chat...",
+    "scrollToBottom": "Cuộn xuống cuối",
+    "startVideoCall": "Bắt đầu cuộc gọi video",
+    "stickers": "Nhãn dán",
+    "inputPlaceholder": "Nhập tin nhắn...",
+    "sendFile": "Gửi tệp"
+  },
+  "Call": {
+    "incomingTitle": "Cuộc gọi video đến",
+    "incomingDesc": "{name} đang gọi cho bạn",
+    "accept": "Chấp nhận",
+    "decline": "Từ chối"
+  },
+  "Matches": {
+    "searching": "Đang tìm kiếm...",
+    "noProfilesTitle": "Không còn hồ sơ nào",
+    "noProfilesDesc": "Hãy quay lại sau, hoặc thử thay đổi sở thích của bạn!",
+    "reload": "Tải lại",
+    "title": "Tìm kiếm Match",
+    "counter": "{current} / {total} hồ sơ"
+  },
+  "MatchesList": {
+    "loading": "Đang tải danh sách match...",
+    "title": "Các Match của bạn",
+    "count": "{count} match",
+    "emptyTitle": "Bạn chưa có match nào",
+    "emptyDesc": "Hãy bắt đầu vuốt để tìm match phù hợp!",
+    "startSwiping": "Bắt đầu vuốt",
+    "noBio": "Chưa có giới thiệu."
+  },
+  "ChatWindow": {
+    "selectConversation": "Chọn một cuộc trò chuyện để bắt đầu nhắn tin.",
+    "loadingMatches": "Đang tải các cặp đôi của bạn..."
   }
 }

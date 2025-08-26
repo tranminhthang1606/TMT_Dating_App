@@ -6,8 +6,10 @@ import StreamChatInterface from "@/app/[locale]/components/chat/StreamChatInterf
 import { getUserMatches } from "@/lib/actions/matches";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import useAuthStore from "@/store/authStore";
 import ChatHeader from "./ChatHeader";
+
 interface ChatWindowProps {
     chatId: string | null;
 }
@@ -19,7 +21,8 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
     const params = useParams();
     const { user } = useAuthStore();
     const userId = chatId;
-
+    const t = useTranslations('ChatWindow');
+    
     const chatInterfaceRef = useRef<{ handleVideoCall: () => void } | null>(null);
 
     useEffect(() => {
@@ -57,7 +60,7 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
                 <div className="text-center w-full h-full flex flex-col">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto"></div>
                     <p className="mt-4 text-gray-600 dark:text-gray-400">
-                        Loading your matches...
+                    {t('loadingMatches')}
                     </p>
                 </div>
             </div>
@@ -82,7 +85,7 @@ export default function ChatWindow({ chatId }: ChatWindowProps) {
                             d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
                         ></path>
                     </svg>
-                    <p className="text-lg font-semibold">Chọn một cuộc trò chuyện để bắt đầu nhắn tin.</p>
+                    <p className="text-lg font-semibold">{t('selectConversation')}</p>
                 </div>
             </div>
         )

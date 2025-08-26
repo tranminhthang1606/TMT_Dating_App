@@ -1,5 +1,54 @@
 {
   "HomePage": {
     "title": "Hello world!"
+  },
+  "Navbar": {
+    "brand": "Matcha",
+    "explore": "Explore",
+    "connections": "Connections",
+    "messages": "Messages",
+    "profile": "Profile",
+    "logout": "Sign out"
+  },
+  "Chat": {
+    "loadingMatches": "Loading your matches...",
+    "title": "Messages",
+    "conversationsCount": "{count} conversations",
+    "noConversationsTitle": "No conversations yet",
+    "noConversationsDesc": "Start swiping to find matches and start chatting!",
+    "startSwiping": "Start swiping",
+    "settingUp": "Setting up chat...",
+    "scrollToBottom": "Scroll to bottom",
+    "startVideoCall": "Start Video Call",
+    "stickers": "Stickers",
+    "inputPlaceholder": "Type a message...",
+    "sendFile": "Send file"
+  },
+  "Call": {
+    "incomingTitle": "Incoming Video Call",
+    "incomingDesc": "{name} is calling you",
+    "accept": "Accept",
+    "decline": "Decline"
+  },
+  "Matches": {
+    "searching": "Searching...",
+    "noProfilesTitle": "No more profiles",
+    "noProfilesDesc": "Come back later or try adjusting your preferences!",
+    "reload": "Reload",
+    "title": "Find Matches",
+    "counter": "{current} / {total} profiles"
+  },
+  "MatchesList": {
+    "loading": "Loading your matches...",
+    "title": "Your Matches",
+    "count": "{count} matches",
+    "emptyTitle": "You don’t have any matches yet",
+    "emptyDesc": "Start swiping to find a good match!",
+    "startSwiping": "Start swiping",
+    "noBio": "No bio yet."
+  },
+  "ChatWindow": {
+    "selectConversation": "Select a conversation to start messaging.",
+    "loadingMatches": "Loading your matches..."
   }
 }

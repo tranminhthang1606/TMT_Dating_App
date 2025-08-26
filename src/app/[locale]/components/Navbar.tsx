@@ -7,10 +7,13 @@ import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import useAuthStore from '@/store/authStore';
 import LocaleSwitcher from './LocaleSwitcher';
-import { useLocale } from 'next-intl';
+
+import { useLocale, useTranslations } from 'next-intl';
+
 
 const Navbar = () => {
   const { signOut, user } = useAuthStore();
+  const t = useTranslations('Navbar');
   const navRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLAnchorElement>(null);
   const menuRef = useRef<HTMLUListElement>(null);
@@ -59,7 +62,7 @@ const Navbar = () => {
           href={`/${locale}`}
           className="text-2xl font-bold text-rose-500 hover:text-orange-400 transition-colors duration-300"
         >
-          Matcha
+          {t('brand')}
         </Link>
 
         <div className="flex items-center space-x-8">
@@ -69,7 +72,7 @@ const Navbar = () => {
                 href={`/${locale}/matches`}
                 className="text-gray-700 hover:text-rose-500 transition-colors duration-300"
               >
-                Khám phá
+                {t('explore')}
               </Link>
             </li>
             <li>
@@ -77,7 +80,7 @@ const Navbar = () => {
                 href={`/${locale}/list-matches`}
                 className="text-gray-700 hover:text-rose-500 transition-colors duration-300"
               >
-                Kết nối
+                {t('connections')}
               </Link>
             </li>
             <li>
@@ -85,7 +88,7 @@ const Navbar = () => {
                 href={`/${locale}/chat`}
                 className="text-gray-700 hover:text-rose-500 transition-colors duration-300"
               >
-                Tin nhắn
+                {t('messages')}
               </Link>
             </li>
             <li>
@@ -93,7 +96,7 @@ const Navbar = () => {
                 href={`/${locale}/profile`}
                 className="text-gray-700 hover:text-rose-500 transition-colors duration-300"
               >
-                Hồ sơ
+                {t('profile')}
               </Link>
             </li>
           </ul>
@@ -101,7 +104,7 @@ const Navbar = () => {
         <div className="flex gap-2">
           <LocaleSwitcher />
           
-          <button ref={logoutIconRef} title="Đăng xuất" onClick={signOut}>
+          <button ref={logoutIconRef} title={t('logout')} onClick={signOut}>
             <ArrowRightOnRectangleIcon className="h-8 w-8 text-rose-500 hover:text-orange-400 transition-colors duration-300" />
           </button>
         </div>
