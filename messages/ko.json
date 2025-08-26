@@ -1,0 +1,53 @@
+{
+  "Navbar": {
+    "brand": "Matcha",
+    "explore": "탐색",
+    "connections": "연결",
+    "messages": "메시지",
+    "profile": "프로필",
+    "logout": "로그아웃"
+  },
+  "Chat": {
+    "loadingMatches": "매치를 불러오는 중...",
+    "title": "메시지",
+    "conversationsCount": "{count}개의 대화",
+    "noConversationsTitle": "대화가 없습니다",
+    "noConversationsDesc": "스와이프를 시작하여 매치를 찾고 대화를 시작하세요!",
+    "startSwiping": "스와이프 시작",
+    "settingUp": "채팅 설정 중...",
+    "scrollToBottom": "맨 아래로 스크롤",
+    "startVideoCall": "영상 통화 시작",
+    "stickers": "스티커",
+    "inputPlaceholder": "메시지를 입력하세요...",
+    "sendFile": "파일 보내기"
+  },
+  "Call": {
+    "incomingTitle": "영상 통화 수신",
+    "incomingDesc": "{name} 님이 전화 중입니다",
+    "accept": "수락",
+    "decline": "거절"
+  },
+  "Matches": {
+    "searching": "검색 중...",
+    "noProfilesTitle": "더 이상 프로필이 없습니다",
+    "noProfilesDesc": "나중에 다시 시도하거나 선호도를 변경해 보세요!",
+    "reload": "새로고침",
+    "title": "매치 찾기",
+    "counter": "{current} / {total} 프로필"
+  },
+  "MatchesList": {
+    "loading": "매치 목록 불러오는 중...",
+    "title": "나의 매치",
+    "count": "{count} 매치",
+    "emptyTitle": "아직 매치가 없습니다",
+    "emptyDesc": "스와이프를 시작하여 맞는 상대를 찾아보세요!",
+    "startSwiping": "스와이프 시작",
+    "noBio": "소개가 없습니다."
+  },
+  "ChatWindow": {
+    "selectConversation": "대화를 선택하여 메시지를 시작하세요.",
+    "loadingMatches": "매치를 불러오는 중..."
+  }
+}
+
+

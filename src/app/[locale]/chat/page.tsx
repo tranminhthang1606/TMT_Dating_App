@@ -4,6 +4,7 @@ import { getUserMatches } from "@/lib/actions/matches";
 import { useEffect, useState } from "react";
 import { UserProfile } from "../profile/page";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { gsap } from "gsap";
 import ChatWindow from "../components/chat/ChatWindow";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -23,6 +24,7 @@ export default function ChatPage() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const locale = useLocale();
+  const t = useTranslations('Chat');
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
   useEffect(() => {
@@ -85,9 +87,7 @@ export default function ChatPage() {
       <div className="h-[calc(100vh-64px)] mt-24 bg-gradient-to-br from-pink-50 to-red-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600 dark:text-gray-400">
-            Đang tải các cặp đôi của bạn...
-          </p>
+          <p className="mt-4 text-gray-600 dark:text-gray-400">{t('loadingMatches')}</p>
         </div>
       </div>
     );
@@ -103,11 +103,9 @@ export default function ChatPage() {
         {/* Left Column: Chat List */}
        <div className={`w-full lg:w-1/3 max-w-2xl mx-auto lg:mx-0 lg:h-full lg:flex lg:flex-col ${id ? 'hidden lg:block' : ''}`}>
           <header className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-              Tin nhắn
-            </h1>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{t('title')}</h1>
             <p className="text-gray-600 dark:text-gray-400">
-              {chats.length} cuộc trò chuyện
+              {t('conversationsCount', {count: chats.length})}
             </p>
           </header>
 
@@ -117,16 +115,16 @@ export default function ChatPage() {
                 <span className="text-4xl">💬</span>
               </div>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-                Chưa có cuộc trò chuyện nào
+                {t('noConversationsTitle')}
               </h2>
               <p className="text-gray-600 dark:text-gray-400 mb-6">
-                Hãy bắt đầu quẹt để tìm các cặp đôi và bắt đầu trò chuyện!
+                {t('noConversationsDesc')}
               </p>
               <Link
                 href="/matches"
                 className="bg-gradient-to-r from-pink-500 to-red-500 text-white font-semibold py-3 px-6 rounded-full hover:from-pink-600 hover:to-red-600 transition-all duration-200"
               >
-                Bắt đầu Quẹt
+                {t('startSwiping')}
               </Link>
             </div>
           ) : (

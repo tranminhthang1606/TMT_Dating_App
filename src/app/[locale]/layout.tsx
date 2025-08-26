@@ -3,9 +3,11 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Playfair_Display, Source_Sans_3 } from "next/font/google"
 import Navbar from "@/app/[locale]/components/Navbar";
+import GlobalIncomingCallListener from "@/app/[locale]/components/chat/GlobalIncomingCallListener";
 import { AuthProvider } from "./AuthProvider";
 import ProfilePage from "./profile/page";
 import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,20 +39,22 @@ export const metadata: Metadata = {
   generator: "v0.app",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const messages = await getMessages();
   return (
-    <html lang="en" className="h-full">
+    <html lang="vi" className="h-full">
       <body
         className={`${playfair.variable} ${sourceSans.variable} antialiased h-full`}
       >
         <AuthProvider >
-          <NextIntlClientProvider>
+          <NextIntlClientProvider messages={messages}>
             <div className="h-full flex flex-col bg-gradient-to-br from-pink-50 to-red-50 dark:from-gray-900 dark:to-gray-800 dark:text-red-50 ">
               <Navbar />
+              <GlobalIncomingCallListener />
               {children}
             </div>
           </NextIntlClientProvider>

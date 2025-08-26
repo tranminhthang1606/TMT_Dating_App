@@ -4,6 +4,7 @@ import { getPotentialMatches, likeUser } from "@/lib/actions/matches"
 import { useEffect, useState, useRef } from "react"
 import type { UserProfile } from "../profile/page"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 import MatchCard from "@/app/[locale]/components/matches/MatchCard"
 import MatchButtons from "@/app/[locale]/components/matches/MatchButtons"
 import MatchNotification from "@/app/[locale]/components/matches/MatchNotification"
@@ -19,6 +20,7 @@ export default function MatchesPage() {
   const [matchedUser, setMatchedUser] = useState<UserProfile | null>(null)
 
   const router = useRouter()
+  const t = useTranslations('Matches')
   const cardRef = useRef<HTMLDivElement>(null)
   const headerRef = useRef<HTMLDivElement>(null)
 
@@ -123,7 +125,7 @@ export default function MatchesPage() {
       <div className="h-full bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500  mx-auto"></div>
-          <p className="mt-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-500">Đang tìm kiếm...</p>
+          <p className="mt-4 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-500">{t('searching')}</p>
         </div>
       </div>
     )
@@ -136,13 +138,13 @@ export default function MatchesPage() {
           <div className="w-24 h-24 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
             <span className="text-4xl">💕</span>
           </div>
-          <h2 className="text-2xl font-bold  mb-4">Không còn hồ sơ nào</h2>
-          <p className="text-gray-600 mb-6">Hãy quay lại sau, hoặc thử thay đổi sở thích của bạn!</p>
+          <h2 className="text-2xl font-bold  mb-4">{t('noProfilesTitle')}</h2>
+          <p className="text-gray-600 mb-6">{t('noProfilesDesc')}</p>
           <button
             onClick={() => router.refresh()}
             className="bg-gradient-to-r from-pink-500 to-red-500 text-white font-semibold py-3 px-6 rounded-full hover:from-pink-600 hover:to-red-600 transition-all duration-200"
           >
-            Tải lại
+            {t('reload')}
           </button>
         </div>
         {showMatchNotification && matchedUser && (
@@ -167,31 +169,41 @@ export default function MatchesPage() {
   }
 
   return (
-    <div className="h-full pt-24 pb-8 flex flex-col items-center ">
-      <div>
-        <header ref={headerRef} className="mb-8 opacity-0">
-          <div className="text-center">
-            <h1 className="text-3xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-500">Tìm kiếm Match</h1>
-            <p className="">
-              {currentIndex + 1} / {potentialMatches.length} hồ sơ
-            </p>
-          </div>
-        </header>
-
-        <div className="flex-grow flex items-center justify-center w-full min-w-sm px-4">
-          <div ref={cardRef} className="w-full">
-            <MatchCard user={currentPotentialMatch} />
-          </div>
-        </div>
-
-        <div className="mt-8 px-4">
-          <MatchButtons onLike={handleLike} onPass={handlePass} />
-        </div>
-
-        {showMatchNotification && matchedUser && (
-          <MatchNotification match={matchedUser} onClose={handleCloseMatchNotification} onStartChat={handleStartChat} />
-        )}
+    <div className="relative min-h-[calc(100vh-80px)] pt-24 pb-10 flex flex-col items-center overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute -top-20 -left-20 w-80 h-80 bg-pink-300/30 dark:bg-pink-500/10 blur-3xl rounded-full" />
+        <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-rose-300/30 dark:bg-rose-500/10 blur-3xl rounded-full" />
       </div>
+
+      <header ref={headerRef} className="mb-6 opacity-0">
+        <div className="text-center">
+          <h1 className="text-4xl font-extrabold tracking-tight mb-2 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-rose-500 to-red-500">
+            {t('title')}
+          </h1>
+          <p className="text-gray-600 dark:text-gray-300">
+            {t('counter', {current: currentIndex + 1, total: potentialMatches.length})}
+          </p>
+        </div>
+      </header>
+
+      <div className="flex-grow flex items-center justify-center w-full px-4">
+        <div ref={cardRef} className="w-full max-w-md">
+          <div className="relative rounded-3xl shadow-2xl backdrop-blur bg-white/70 dark:bg-gray-800/60 ring-1 ring-black/5 overflow-hidden">
+            <MatchCard user={currentPotentialMatch} />
+            <div className="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-white/80 dark:bg-gray-900/50 text-gray-700 dark:text-gray-200 shadow">
+              💖 {t('title')}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-6 px-4">
+        <MatchButtons onLike={handleLike} onPass={handlePass} />
+      </div>
+
+      {showMatchNotification && matchedUser && (
+        <MatchNotification match={matchedUser} onClose={handleCloseMatchNotification} onStartChat={handleStartChat} />
+      )}
     </div>
   )
 }
