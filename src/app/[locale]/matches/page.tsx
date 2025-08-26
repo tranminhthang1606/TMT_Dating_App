@@ -27,6 +27,7 @@ export default function MatchesPage() {
     async function loadUsers() {
       try {
         const potentialMatchesData = await getPotentialMatches()
+        console.log(potentialMatchesData)
         setPotentialMatches(potentialMatchesData)
       } catch (error) {
         console.error(error)
