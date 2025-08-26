@@ -96,16 +96,16 @@ const Navbar = () => {
               </Link>
             </li>
           </ul>
-
+        </div>
+        <div className="flex gap-2">
+          <LocaleSwitcher />
+          
           <button ref={logoutIconRef} title="Đăng xuất" onClick={signOut}>
-            <ArrowRightOnRectangleIcon className="h-6 w-6 text-rose-500 hover:text-orange-400 transition-colors duration-300" />
+            <ArrowRightOnRectangleIcon className="h-8 w-8 text-rose-500 hover:text-orange-400 transition-colors duration-300" />
           </button>
-          <LocaleSwitcher/>
-          
-          
         </div>
       </div>
-    </nav>:<></>
+    </nav> : <></>
   );
 };
 
