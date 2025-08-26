@@ -7,6 +7,7 @@ import { Power2 } from "gsap/all";
 import { ArrowPathIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { getCurrentUserProfile } from "@/lib/actions/profile";
 import useAuthStore from "@/store/authStore";
+import { useLocale } from "next-intl";
 
 // Giả lập các hàm và kiểu dữ liệu từ bên ngoài
 // Bạn cần đảm bảo các hàm này có sẵn trong dự án của bạn
@@ -86,7 +87,7 @@ const ProfilePage = () => {
     const infoRef = useRef<HTMLDivElement>(null);
     const mainContentRef = useRef<HTMLDivElement>(null);
     const sideContentRef = useRef<HTMLDivElement>(null);
-    
+    const locale = useLocale();
     useEffect(() => {
         const loadProfile = async () => {
             try {
@@ -261,7 +262,7 @@ const ProfilePage = () => {
                                 <h3 className="text-xl font-bold text-gray-800 mb-4">Tác vụ nhanh</h3>
                                 <div className="space-y-4">
                                     <Link
-                                        href="/profile/edit"
+                                        href={`/${locale}/profile/edit`}
                                         className="flex items-center justify-between p-4 rounded-xl bg-white shadow-sm hover:bg-gray-100 transition-colors duration-200 group"
                                     >
                                         <div className="flex items-center space-x-4">

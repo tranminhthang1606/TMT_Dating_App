@@ -7,6 +7,7 @@ import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 import useAuthStore from '@/store/authStore';
 import LocaleSwitcher from './LocaleSwitcher';
+import { useLocale } from 'next-intl';
 
 const Navbar = () => {
   const { signOut, user } = useAuthStore();
@@ -14,7 +15,7 @@ const Navbar = () => {
   const logoRef = useRef<HTMLAnchorElement>(null);
   const menuRef = useRef<HTMLUListElement>(null);
   const logoutIconRef = useRef<HTMLButtonElement>(null);
-
+  const locale = useLocale();
   useEffect(() => {
     console.log(user);
     if (!navRef.current || !logoRef.current || !menuRef.current || !logoutIconRef.current) {
@@ -55,7 +56,7 @@ const Navbar = () => {
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <Link
           ref={logoRef}
-          href="/"
+          href={`/${locale}`}
           className="text-2xl font-bold text-rose-500 hover:text-orange-400 transition-colors duration-300"
         >
           Matcha
@@ -65,7 +66,7 @@ const Navbar = () => {
           <ul ref={menuRef} className="flex space-x-8">
             <li>
               <Link
-                href="/matches"
+                href={`/${locale}/matches`}
                 className="text-gray-700 hover:text-rose-500 transition-colors duration-300"
               >
                 Khám phá
@@ -73,7 +74,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="/list-matches"
+                href={`/${locale}/list-matches`}
                 className="text-gray-700 hover:text-rose-500 transition-colors duration-300"
               >
                 Kết nối
@@ -81,7 +82,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="/chat"
+                href={`/${locale}/chat`}
                 className="text-gray-700 hover:text-rose-500 transition-colors duration-300"
               >
                 Tin nhắn
@@ -89,7 +90,7 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                href="/profile"
+                href={`/${locale}/profile`}
                 className="text-gray-700 hover:text-rose-500 transition-colors duration-300"
               >
                 Hồ sơ
