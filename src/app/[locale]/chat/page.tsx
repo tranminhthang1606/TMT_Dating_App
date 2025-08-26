@@ -4,6 +4,11 @@ import { getUserMatches } from "@/lib/actions/matches";
 import { useEffect, useState } from "react";
 import { UserProfile } from "../profile/page";
 import Link from "next/link";
+import { gsap } from "gsap";
+import ChatWindow from "../components/chat/ChatWindow";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useLocale } from "next-intl";
+
 
 interface ChatData {
   id: string;
@@ -16,20 +21,25 @@ interface ChatData {
 export default function ChatPage() {
   const [chats, setChats] = useState<ChatData[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const router = useRouter();
+  const locale = useLocale();
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
   useEffect(() => {
     async function loadMatches() {
       try {
         const userMatches = await getUserMatches();
+        console.log(userMatches, 'yusdfds', id)
+
         const chatData: ChatData[] = userMatches.map((match) => ({
           id: match.id,
           user: match,
-          lastMessage: "Start your conversation!",
+          lastMessage: "Bắt đầu cuộc trò chuyện của bạn!",
           lastMessageTime: match.created_at,
           unreadCount: 0,
         }));
         setChats(chatData);
-        console.log(userMatches);
+        console.log(userMatches, chatData);
       } catch (error) {
         console.error(error);
       } finally {
@@ -40,20 +50,31 @@ export default function ChatPage() {
     loadMatches();
   }, []);
 
+  useEffect(() => {
+    if (!loading) {
+      // Animate the chat list items when they appear
+      gsap.fromTo(
+        ".chat-item",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, stagger: 0.1, duration: 0.5, ease: "power2.out" }
+      );
+    }
+  }, [chats]);
+
   function formatTime(timestamp: string) {
     const date = new Date(timestamp);
     const now = new Date();
     const diffInHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);
 
     if (diffInHours < 1) {
-      return "Just now";
+      return "Vừa xong";
     } else if (diffInHours < 24) {
       return date.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
       });
     } else if (diffInHours < 48) {
-      return "Yesterday";
+      return "Hôm qua";
     } else {
       return date.toLocaleDateString();
     }
@@ -61,55 +82,60 @@ export default function ChatPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen mt-24 bg-gradient-to-br from-pink-50 to-red-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
+      <div className="h-[calc(100vh-64px)] mt-24 bg-gradient-to-br from-pink-50 to-red-50 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto"></div>
           <p className="mt-4 text-gray-600 dark:text-gray-400">
-            Loading your matches...
+            Đang tải các cặp đôi của bạn...
           </p>
         </div>
       </div>
     );
   }
 
-  return (
-    <div className="min-h-screen mt-24 bg-gradient-to-br from-pink-50 to-red-50 dark:from-gray-900 dark:to-gray-800">
-      <div className="container mx-auto px-4 py-8">
-        <header className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            Messages
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            {chats.length} conversation{chats.length !== 1 ? "s" : ""}
-          </p>
-        </header>
+  function changeConversation(id: string) {
+    router.replace(`/${locale}/chat?id=${id}`)
+  }
 
-        {chats.length === 0 ? (
-          <div className="text-center max-w-md mx-auto p-8">
-            <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
-              <span className="text-4xl">💬</span>
-            </div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-              No conversations yet
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-6">
-              Start swiping to find matches and begin conversations!
+  return (
+    <div className="h-[calc(100vh-64px)] mt-24 bg-gradient-to-br from-pink-50 to-red-50 dark:from-gray-900 dark:to-gray-800">
+      <div className="container mx-auto px-4 py-8 h-full flex flex-col lg:flex-row">
+        {/* Left Column: Chat List */}
+       <div className={`w-full lg:w-1/3 max-w-2xl mx-auto lg:mx-0 lg:h-full lg:flex lg:flex-col ${id ? 'hidden lg:block' : ''}`}>
+          <header className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+              Tin nhắn
+            </h1>
+            <p className="text-gray-600 dark:text-gray-400">
+              {chats.length} cuộc trò chuyện
             </p>
-            <Link
-              href="/matches"
-              className="bg-gradient-to-r from-pink-500 to-red-500 text-white font-semibold py-3 px-6 rounded-full hover:from-pink-600 hover:to-red-600 transition-all duration-200"
-            >
-              Start Swiping
-            </Link>
-          </div>
-        ) : (
-          <div className="max-w-2xl mx-auto">
+          </header>
+
+          {chats.length === 0 ? (
+            <div className="text-center max-w-md mx-auto p-8">
+              <div className="w-24 h-24 bg-gradient-to-r from-pink-500 to-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-4xl">💬</span>
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                Chưa có cuộc trò chuyện nào
+              </h2>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">
+                Hãy bắt đầu quẹt để tìm các cặp đôi và bắt đầu trò chuyện!
+              </p>
+              <Link
+                href="/matches"
+                className="bg-gradient-to-r from-pink-500 to-red-500 text-white font-semibold py-3 px-6 rounded-full hover:from-pink-600 hover:to-red-600 transition-all duration-200"
+              >
+                Bắt đầu Quẹt
+              </Link>
+            </div>
+          ) : (
             <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden">
               {chats.map((chat, key) => (
-                <Link
+                <button
                   key={key}
-                  href={`/chat/${chat.id}`}
-                  className="block hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                  onClick={() => changeConversation(chat.id)}
+                  className="chat-item block hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
                 >
                   <div className="flex items-center p-6 border-b border-gray-200 dark:border-gray-700 last:border-b-0">
                     <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
@@ -140,11 +166,14 @@ export default function ChatPage() {
                       </p>
                     </div>
                   </div>
-                </Link>
+                </button>
               ))}
             </div>
-          </div>
-        )}
+          )}
+        </div>
+        
+
+        <ChatWindow chatId={id} />
       </div>
     </div>
   );
