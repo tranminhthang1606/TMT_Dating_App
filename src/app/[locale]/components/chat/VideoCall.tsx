@@ -28,12 +28,13 @@ export default function VideoCall({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [hasJoined, setHasJoined] = useState(false);
+  const [hasLeft, setHasLeft] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
 
     async function initializeVideoCall() {
-      if (hasJoined) {
+      if (hasJoined || hasLeft) {
         return;
       }
 
@@ -71,7 +72,7 @@ export default function VideoCall({
         setHasJoined(true);
       } catch (error) {
         console.error(error);
-        setError("Failed to initiate call");
+        setError("Không thể khởi tạo cuộc gọi");
       } finally {
         setLoading(false);
       }
@@ -81,15 +82,30 @@ export default function VideoCall({
 
     return () => {
       isMounted = false;
-      if (call && hasJoined) {
-        call.leave();
+      if (call && hasJoined && !hasLeft) {
+        call.leave().catch((err) => {
+          console.warn("Lỗi khi rời cuộc gọi:", err);
+        });
+        setHasLeft(true);
       }
 
       if (client) {
         client.disconnectUser();
       }
     };
-  }, [callId, isIncoming, hasJoined]);
+  }, [callId, isIncoming, hasJoined, hasLeft]);
+
+  const handleLeaveCall = async () => {
+    if (call && hasJoined && !hasLeft) {
+      try {
+        await call.leave();
+        setHasLeft(true);
+      } catch (err) {
+        console.warn("Lỗi khi rời cuộc gọi:", err);
+      }
+    }
+    onCallEnd();
+  };
 
   if (loading) {
     return (
@@ -97,7 +113,7 @@ export default function VideoCall({
         <div className="text-center text-white">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
           <p className="text-lg">
-            {isIncoming ? "Joining call..." : "Starting call..."}
+            {isIncoming ? "Đang tham gia cuộc gọi..." : "Đang bắt đầu cuộc gọi..."}
           </p>
         </div>
       </div>
@@ -111,13 +127,13 @@ export default function VideoCall({
           <div className="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
             <span className="text-2xl">❌</span>
           </div>
-          <h3 className="text-xl font-semibold mb-2">Call Error</h3>
+          <h3 className="text-xl font-semibold mb-2">Lỗi cuộc gọi</h3>
           <p className="text-gray-300 mb-4">{error}</p>
           <button
             onClick={onCallEnd}
             className="bg-gradient-to-r from-pink-500 to-red-500 text-white font-semibold py-3 px-6 rounded-full hover:from-pink-600 hover:to-red-600 transition-all duration-200"
           >
-            Close
+            Đóng
           </button>
         </div>
       </div>
@@ -129,7 +145,7 @@ export default function VideoCall({
       <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
         <div className="text-center text-white">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
-          <p className="text-lg">Setting up call...</p>
+          <p className="text-lg">Đang thiết lập cuộc gọi...</p>
         </div>
       </div>
     );
@@ -141,7 +157,7 @@ export default function VideoCall({
         <StreamCall call={call}>
           <StreamTheme>
             <SpeakerLayout />
-            <CallControls onLeave={onCallEnd} />
+            <CallControls onLeave={handleLeaveCall} />
           </StreamTheme>
         </StreamCall>
       </StreamVideo>
