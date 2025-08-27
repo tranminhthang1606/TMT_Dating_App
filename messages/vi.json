@@ -3,7 +3,7 @@
     "title": "Chào thế giới!"
   },
   "Navbar": {
-    "brand": "Matcha",
+    "brand": "TMTDating",
     "explore": "Khám phá",
     "connections": "Kết nối",
     "messages": "Tin nhắn",
@@ -36,7 +36,20 @@
     "noProfilesDesc": "Hãy quay lại sau, hoặc thử thay đổi sở thích của bạn!",
     "reload": "Tải lại",
     "title": "Tìm kiếm Match",
-    "counter": "{current} / {total} hồ sơ"
+    "counter": "{current} / {total} hồ sơ",
+    "discoverMatches": "Khám phá Matches",
+    "swipeDescription": "Vuốt phải để thích, trái để bỏ qua. Tìm kiếm kết nối hoàn hảo!",
+    "profiles": "Hồ sơ",
+    "viewed": "Đã xem",
+    "newMatch": "Match mới",
+    "pass": "BỎ QUA",
+    "like": "THÍCH",
+    "joinMatcha": "Tham gia Matcha ngay!",
+    "signInDescription": "Đăng nhập để khám phá những match tuyệt vời và tìm kiếm kết nối hoàn hảo!",
+    "signInToStart": "Đăng nhập để bắt đầu Match",
+    "createAccount": "Tạo tài khoản mới",
+    "findingMatches": "Đang tìm kiếm matches...",
+    "searchingPerfect": "Tìm kiếm những kết nối hoàn hảo"
   },
   "MatchesList": {
     "loading": "Đang tải danh sách match...",

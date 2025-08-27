@@ -3,7 +3,7 @@
     "title": "Hello world!"
   },
   "Navbar": {
-    "brand": "Matcha",
+    "brand": "TMTDating",
     "explore": "Explore",
     "connections": "Connections",
     "messages": "Messages",
@@ -36,7 +36,20 @@
     "noProfilesDesc": "Come back later or try adjusting your preferences!",
     "reload": "Reload",
     "title": "Find Matches",
-    "counter": "{current} / {total} profiles"
+    "counter": "{current} / {total} profiles",
+    "discoverMatches": "Discover Matches",
+    "swipeDescription": "Swipe right to like, left to pass. Find your perfect connection!",
+    "profiles": "Profiles",
+    "viewed": "Viewed",
+    "newMatch": "New Match",
+    "pass": "PASS",
+    "like": "LIKE",
+    "joinMatcha": "Join Matcha Today!",
+    "signInDescription": "Sign in to discover amazing matches and find your perfect connection!",
+    "signInToStart": "Sign In to Start Matching",
+    "createAccount": "Create New Account",
+    "findingMatches": "Finding your matches...",
+    "searchingPerfect": "Searching for the perfect connections"
   },
   "MatchesList": {
     "loading": "Loading your matches...",

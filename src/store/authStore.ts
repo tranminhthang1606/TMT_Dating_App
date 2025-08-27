@@ -23,19 +23,23 @@ const useAuthStore = create<AuthState>((set) => ({
     // Hành động để kiểm tra trạng thái người dùng
     checkUser: async () => {
         try {
+            console.log('checkUser called')
             set({ loading: true });
             const { data: { user } } = await supabase.auth.getUser()
+            console.log('getUser result:', user)
             if (!user) {
+                console.log('No user found, signing out')
                 await supabase.auth.signOut() 
             } else {
                 const {
                     data: { session },
                 } = await supabase.auth.getSession();
+                console.log('Session:', session)
                 set({ user: session?.user ?? null });
-                console.log(session?.user)
+                console.log('Set user to:', session?.user)
             }
         } catch (error) {
-            console.error(error);
+            console.error('Error in checkUser:', error);
         } finally {
             set({ loading: false });
         }
