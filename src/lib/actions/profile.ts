@@ -50,6 +50,7 @@ export async function updateUserProfile(profileData: Partial<UserProfile>) {
       gender: profileData.gender,
       birthdate: profileData.birthdate,
       avatar_url: profileData.avatar_url,
+      preferences: profileData.preferences,
       updated_at: new Date().toISOString(),
     })
     .eq("id", user.id);
