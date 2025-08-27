@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
 import { Power2 } from "gsap/all";
-import { UserIcon, IdentificationIcon, GlobeAsiaAustraliaIcon, PencilSquareIcon, EnvelopeIcon, ArrowLeftIcon, ArrowUpOnSquareIcon } from "@heroicons/react/24/outline";
+import { UserIcon, IdentificationIcon, GlobeAsiaAustraliaIcon, PencilSquareIcon, EnvelopeIcon, ArrowLeftIcon, ArrowUpOnSquareIcon, HeartIcon } from "@heroicons/react/24/outline";
 
 export interface UserProfile {
     id: string;
@@ -64,6 +64,11 @@ export default function EditProfilePage() {
     gender: "male" as "male" | "female" | "other",
     birthdate: "",
     avatar_url: "",
+    preferences: {
+      age_range: { min: 18, max: 35 },
+      distance: 50,
+      gender_preference: [] as ("male" | "female" | "other")[],
+    },
   });
 
   
@@ -72,6 +77,7 @@ export default function EditProfilePage() {
   const avatarSectionRef = useRef<HTMLDivElement>(null);
   const fieldsRef = useRef<HTMLDivElement>(null);
   const bioRef = useRef<HTMLDivElement>(null);
+  const preferencesRef = useRef<HTMLDivElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -87,6 +93,11 @@ export default function EditProfilePage() {
             gender: profileData.gender || "male",
             birthdate: profileData.birthdate || "",
             avatar_url: profileData.avatar_url || "",
+            preferences: profileData.preferences || {
+              age_range: { min: 18, max: 35 },
+              distance: 50,
+              gender_preference: [],
+            },
           });
 
           
@@ -105,6 +116,7 @@ export default function EditProfilePage() {
             tl.fromTo(avatarSectionRef.current, { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" }, "<0.2")
               .fromTo(Array.from(fieldsRef.current?.children || []), { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, stagger: 0.1 }, "-=0.2")
               .fromTo(bioRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, "-=0.1")
+              .fromTo(preferencesRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, "-=0.1")
               .fromTo(buttonsRef.current, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, "-=0.1");
           }
         }
@@ -146,6 +158,28 @@ export default function EditProfilePage() {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
+    }));
+  }
+
+  function handlePreferenceChange(field: string, value: any) {
+    setFormData((prev) => ({
+      ...prev,
+      preferences: {
+        ...prev.preferences,
+        [field]: value,
+      },
+    }));
+  }
+
+  function handleGenderPreferenceChange(gender: "male" | "female" | "other") {
+    setFormData((prev) => ({
+      ...prev,
+      preferences: {
+        ...prev.preferences,
+        gender_preference: prev.preferences.gender_preference.includes(gender)
+          ? prev.preferences.gender_preference.filter(g => g !== gender)
+          : [...prev.preferences.gender_preference, gender],
+      },
     }));
   }
 
@@ -304,6 +338,98 @@ export default function EditProfilePage() {
               <p className="text-xs text-gray-500 mt-1">
                 {formData.bio.length}/500 ký tự
               </p>
+            </div>
+
+            {/* Preferences Section */}
+            <div ref={preferencesRef}>
+              <h3 className="text-xl font-bold text-gray-800 mb-4">
+                <HeartIcon className="w-6 h-6 inline-block mr-2 text-pink-500" />
+                Sở thích tìm kiếm
+              </h3>
+              
+              {/* Age Range */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  Khoảng tuổi mong muốn
+                </label>
+                <div className="flex items-center space-x-4">
+                  <div className="flex-1">
+                    <label className="block text-xs text-gray-500 mb-1">Từ</label>
+                    <input
+                      type="number"
+                      min="18"
+                      max="100"
+                      value={formData.preferences.age_range.min}
+                      onChange={(e) => handlePreferenceChange("age_range", {
+                        ...formData.preferences.age_range,
+                        min: parseInt(e.target.value)
+                      })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    />
+                  </div>
+                  <div className="text-gray-400">-</div>
+                  <div className="flex-1">
+                    <label className="block text-xs text-gray-500 mb-1">Đến</label>
+                    <input
+                      type="number"
+                      min="18"
+                      max="100"
+                      value={formData.preferences.age_range.max}
+                      onChange={(e) => handlePreferenceChange("age_range", {
+                        ...formData.preferences.age_range,
+                        max: parseInt(e.target.value)
+                      })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Distance */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Khoảng cách tối đa (km)
+                </label>
+                <input
+                  type="range"
+                  min="1"
+                  max="100"
+                  value={formData.preferences.distance}
+                  onChange={(e) => handlePreferenceChange("distance", parseInt(e.target.value))}
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
+                />
+                <div className="flex justify-between text-xs text-gray-500 mt-1">
+                  <span>1km</span>
+                  <span className="font-medium text-pink-500">{formData.preferences.distance}km</span>
+                  <span>100km</span>
+                </div>
+              </div>
+
+              {/* Gender Preference */}
+              <div className="mb-6">
+                <label className="block text-sm font-medium text-gray-700 mb-3">
+                  Giới tính quan tâm
+                </label>
+                <div className="flex flex-wrap gap-3">
+                  {(["male", "female", "other"] as const).map((gender) => (
+                    <button
+                      key={gender}
+                      type="button"
+                      onClick={() => handleGenderPreferenceChange(gender)}
+                      className={`px-4 py-2 rounded-lg border-2 transition-all duration-200 ${
+                        formData.preferences.gender_preference.includes(gender)
+                          ? "border-pink-500 bg-pink-50 text-pink-700"
+                          : "border-gray-300 bg-white text-gray-700 hover:border-pink-300"
+                      }`}
+                    >
+                      {gender === "male" ? "Nam" : gender === "female" ? "Nữ" : "Khác"}
+                    </button>
+                  ))}
+                </div>
+                <p className="text-xs text-gray-500 mt-2">
+                  Chọn tất cả nếu bạn quan tâm đến mọi giới tính
+                </p>
+              </div>
             </div>
 
             {error && (

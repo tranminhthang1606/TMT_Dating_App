@@ -1,0 +1,76 @@
+{
+  "name": "Matcha - Modern Dating App",
+  "short_name": "Matcha",
+  "description": "Modern dating app to help you find true love with smart matching, video chat, and secure messaging",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ec4899",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["dating", "social", "lifestyle", "entertainment"],
+  "icons": [
+    {
+      "src": "/icon-192x192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512x512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "32x32",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-wide.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Matcha Dating App - Desktop View"
+    },
+    {
+      "src": "/screenshot-narrow.png",
+      "sizes": "750x1334",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Matcha Dating App - Mobile View"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Start Swiping",
+      "short_name": "Swipe",
+      "description": "Start swiping through potential matches",
+      "url": "/matches",
+      "icons": [
+        {
+          "src": "/favicon.svg",
+          "sizes": "32x32"
+        }
+      ]
+    },
+    {
+      "name": "View Matches",
+      "short_name": "Matches",
+      "description": "View your current matches",
+      "url": "/list-matches",
+      "icons": [
+        {
+          "src": "/favicon.svg",
+          "sizes": "32x32"
+        }
+      ]
+    }
+  ]
+}
