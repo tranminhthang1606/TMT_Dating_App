@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes:wght@400;700&family=Dancing+Script:wght@400;500;600;700&family=Pacifico&family=Satisfy&family=Kaushan+Script&family=Playfair+Display:wght@400;500;600;700&family=Crimson+Text:wght@400;600;700&family=Libre+Baskerville:wght@400;700&family=Allura&family=Alex+Brush&family=Berkshire+Swash&family=Petit+Formal+Script&display=swap');
 @import "tailwindcss";
 
 :root {
@@ -24,6 +25,23 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Ensure fonts are loaded */
+@font-face {
+  font-family: 'Allura';
+  src: url('https://fonts.gstatic.com/s/allura/v18/9oRPNYsQpS4zjuA_hAgWDto.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Berkshire Swash';
+  src: url('https://fonts.gstatic.com/s/berkshireswash/v14/ptRMTiC6eS83oJDFfTvJU6GU60w1KXI5IkBk.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 @layer components {
   .card-swipe {
@@ -125,5 +143,177 @@ body {
   .slider::-moz-range-thumb:hover {
     transform: scale(1.1);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Ensure all content fits within viewport */
+  .viewport-fit {
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+  }
+
+  /* Responsive card sizing for all screen sizes */
+  @media (max-width: 640px) {
+    .card-container {
+      max-width: 280px !important;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 768px) {
+    .card-container {
+      max-width: 320px !important;
+    }
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .card-container {
+      max-width: 360px !important;
+    }
+  }
+
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    .card-container {
+      max-width: 400px !important;
+    }
+  }
+
+  @media (min-width: 1281px) {
+    .card-container {
+      max-width: 450px !important;
+    }
+  }
+
+  /* Ensure proper aspect ratio and sizing */
+  .match-card {
+    aspect-ratio: 3/4;
+    object-fit: cover;
+  }
+
+  /* Optimize text scaling for different screen sizes */
+  .responsive-text {
+    font-size: clamp(0.75rem, 2vw, 1.5rem);
+  }
+
+  .responsive-heading {
+    font-size: clamp(1.25rem, 4vw, 3rem);
+  }
+
+  /* Navbar responsive styles */
+  .navbar-logo {
+    transition: all 0.3s ease;
+  }
+
+  .navbar-logo:hover {
+    transform: scale(1.05);
+  }
+
+  /* Mobile menu animation */
+  .mobile-menu-enter {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  .mobile-menu-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 300ms, transform 300ms;
+  }
+
+  .mobile-menu-exit {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mobile-menu-exit-active {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 300ms, transform 300ms;
+  }
+
+  /* Navbar backdrop blur for better readability */
+  .navbar-backdrop {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  /* Artistic font styles */
+  .font-great-vibes {
+    font-family: 'Great Vibes', cursive;
+    letter-spacing: 0.5px;
+  }
+
+  .font-dancing-script {
+    font-family: 'Dancing Script', cursive;
+    letter-spacing: 0.3px;
+  }
+
+  .font-pacifico {
+    font-family: 'Pacifico', cursive;
+    letter-spacing: 0.2px;
+  }
+
+  .font-satisfy {
+    font-family: 'Satisfy', cursive;
+    letter-spacing: 0.4px;
+  }
+
+  .font-kaushan-script {
+    font-family: 'Kaushan Script', cursive;
+    letter-spacing: 0.3px;
+  }
+
+  .font-playfair {
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 0.2px;
+    font-weight: 600;
+  }
+
+  .font-crimson {
+    font-family: 'Crimson Text', serif;
+    letter-spacing: 0.3px;
+    font-weight: 600;
+  }
+
+  .font-libre-baskerville {
+    font-family: 'Libre Baskerville', serif;
+    letter-spacing: 0.2px;
+    font-weight: 700;
+  }
+
+  .font-allura {
+    font-family: 'Allura', cursive;
+    letter-spacing: 0.5px;
+    font-weight: 400;
+  }
+
+  .font-alex-brush {
+    font-family: 'Alex Brush', cursive;
+    letter-spacing: 0.3px;
+    font-weight: 400;
+  }
+
+  .font-berkshire-swash {
+    font-family: 'Berkshire Swash', cursive;
+    letter-spacing: 0.2px;
+    font-weight: 400;
+  }
+
+  .font-petit-formal {
+    font-family: 'Petit Formal Script', cursive;
+    letter-spacing: 0.4px;
+    font-weight: 400;
+  }
+
+  /* Enhanced gradient text effect */
+  .brand-gradient {
+    background: linear-gradient(135deg, #ec4899, #f43f5e, #a855f7);
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 }
