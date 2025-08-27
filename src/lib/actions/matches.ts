@@ -2,6 +2,7 @@
 
 import { UserProfile } from "@/app/[locale]/profile/page";
 import { createClient } from "../supabase/server";
+import { calculateAge, calculateDistance } from "../helpers/calculate-age";
 
 export async function getPotentialMatches(): Promise<UserProfile[]> {
   const supabase = await createClient();
@@ -13,55 +14,98 @@ export async function getPotentialMatches(): Promise<UserProfile[]> {
     throw new Error("Not authenticated.");
   }
 
+  // Get current user's profile and preferences
+  const { data: currentUser, error: userError } = await supabase
+    .from("users")
+    .select("*")
+    .eq("id", user.id)
+    .single();
+
+  if (userError) {
+    throw new Error("Failed to get current user profile");
+  }
+
+  const currentUserPrefs = currentUser.preferences as any;
+  const currentUserAge = calculateAge(currentUser.birthdate);
+
+  // Get all potential matches
   const { data: potentialMatches, error } = await supabase
     .from("users")
     .select("*")
     .neq("id", user.id)
-    .limit(50);
+    .limit(100);
 
   if (error) {
     throw new Error("failed to fetch potential matches");
   }
 
-  const { data: userPrefs, error: prefsError } = await supabase
-    .from("users")
-    .select("preferences")
-    .eq("id", user.id)
-    .single();
+  // Filter matches based on preferences
+  const filteredMatches = potentialMatches
+    .filter((match) => {
+      // Filter by gender preference
+      const genderPreference = currentUserPrefs?.gender_preference || [];
+      if (genderPreference.length > 0 && !genderPreference.includes(match.gender)) {
+        return false;
+      }
 
-  if (prefsError) {
-    throw new Error("Failed to get user preferences");
-  }
+      // Filter by age range
+      const ageRange = currentUserPrefs?.age_range || { min: 18, max: 100 };
+      const matchAge = calculateAge(match.birthdate);
+      if (matchAge < ageRange.min || matchAge > ageRange.max) {
+        return false;
+      }
 
-  const currentUserPrefs = userPrefs.preferences as any;
-  const genderPreference = currentUserPrefs?.gender_preference || [];
-  const filteredMatches =
-    potentialMatches
-      .filter((match) => {
-        if (!genderPreference || genderPreference.length === 0) {
-          return true;
+      // Check if the match's preferences also include the current user
+      const matchPrefs = match.preferences as any;
+      const matchGenderPref = matchPrefs?.gender_preference || [];
+      const matchAgeRange = matchPrefs?.age_range || { min: 18, max: 100 };
+      
+      // Check if match is interested in current user's gender
+      if (matchGenderPref.length > 0 && !matchGenderPref.includes(currentUser.gender)) {
+        return false;
+      }
+
+      // Check if match is interested in current user's age
+      if (currentUserAge < matchAgeRange.min || currentUserAge > matchAgeRange.max) {
+        return false;
+      }
+
+      // Filter by distance if location data is available
+      const maxDistance = currentUserPrefs?.distance || 100;
+      if (currentUser.location_lat && currentUser.location_lng && 
+          match.location_lat && match.location_lng) {
+        const distance = calculateDistance(
+          currentUser.location_lat,
+          currentUser.location_lng,
+          match.location_lat,
+          match.location_lng
+        );
+        if (distance > maxDistance) {
+          return false;
         }
+      }
+      
+      return true;
+    })
+    .map((match) => ({
+      id: match.id,
+      full_name: match.full_name,
+      username: match.username,
+      email: "",
+      gender: match.gender,
+      birthdate: match.birthdate,
+      bio: match.bio,
+      avatar_url: match.avatar_url,
+      preferences: match.preferences,
+      location_lat: match.location_lat,
+      location_lng: match.location_lng,
+      last_active: new Date().toISOString(),
+      is_verified: true,
+      is_online: false,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    })) || [];
 
-        return genderPreference.includes(match.gender);
-      })
-      .map((match) => ({
-        id: match.id,
-        full_name: match.full_name,
-        username: match.username,
-        email: "",
-        gender: match.gender,
-        birthdate: match.birthdate,
-        bio: match.bio,
-        avatar_url: match.avatar_url,
-        preferences: match.preferences,
-        location_lat: undefined,
-        location_lng: undefined,
-        last_active: new Date().toISOString(),
-        is_verified: true,
-        is_online: false,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      })) || [];
   return filteredMatches;
 }
 
@@ -162,8 +206,8 @@ export async function getUserMatches() {
       bio: otherUser.bio,
       avatar_url: otherUser.avatar_url,
       preferences: otherUser.preferences,
-      location_lat: undefined,
-      location_lng: undefined,
+      location_lat: otherUser.location_lat,
+      location_lng: otherUser.location_lng,
       last_active: new Date().toISOString(),
       is_verified: true,
       is_online: false,
