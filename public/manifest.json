@@ -1,6 +1,6 @@
 {
-  "name": "Matcha - Modern Dating App",
-  "short_name": "Matcha",
+  "name": "TMTDating - Modern Dating App",
+  "short_name": "TMTDating",
   "description": "Modern dating app to help you find true love with smart matching, video chat, and secure messaging",
   "start_url": "/",
   "display": "standalone",
@@ -37,14 +37,14 @@
       "sizes": "1280x720",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "Matcha Dating App - Desktop View"
+      "label": "TMTDating - Desktop View"
     },
     {
       "src": "/screenshot-narrow.png",
       "sizes": "750x1334",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "Matcha Dating App - Mobile View"
+      "label": "TMTDating - Mobile View"
     }
   ],
   "shortcuts": [

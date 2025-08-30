@@ -3,7 +3,7 @@
     "title": "Chào thế giới!"
   },
   "Navbar": {
-    "brand": "Matcha",
+    "brand": "TMTDating",
     "explore": "Khám phá",
     "connections": "Kết nối",
     "messages": "Tin nhắn",
@@ -48,7 +48,7 @@
     "newMatch": "Match mới",
     "pass": "BỎ QUA",
     "like": "THÍCH",
-    "joinMatcha": "Tham gia Matcha ngay!",
+    "joinTMTDating": "Tham gia TMTDating ngay!",
     "signInDescription": "Đăng nhập để khám phá những match tuyệt vời và tìm kiếm kết nối hoàn hảo!",
     "signInToStart": "Đăng nhập để bắt đầu Match",
     "createAccount": "Tạo tài khoản mới",

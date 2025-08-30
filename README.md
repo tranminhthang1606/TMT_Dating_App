@@ -1,4 +1,4 @@
-# Matcha - Modern Dating App
+# TMTDating - Modern Dating App
 
 A modern, responsive dating application built with Next.js, featuring smart matching algorithms, video chat, and secure messaging.
 
@@ -164,7 +164,7 @@ src/
 ```javascript
 // Add to your analytics configuration
 gtag('config', 'GA_MEASUREMENT_ID', {
-  page_title: 'Matcha Dating App',
+  page_title: 'TMTDating App',
   page_location: window.location.href,
   custom_map: {
     'custom_parameter_1': 'user_type',
@@ -226,7 +226,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🆘 Support
 
-For support, email support@matcha-app.com or create an issue in this repository.
+For support, email support@tmtdating.com or create an issue in this repository.
 
 ---
 

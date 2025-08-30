@@ -3,7 +3,7 @@
     "title": "Hello world!"
   },
   "Navbar": {
-    "brand": "Matcha",
+    "brand": "TMTDating",
     "explore": "Explore",
     "connections": "Connections",
     "messages": "Messages",
@@ -48,7 +48,7 @@
     "newMatch": "New Match",
     "pass": "PASS",
     "like": "LIKE",
-    "joinMatcha": "Join Matcha Today!",
+    "joinTMTDating": "Join TMTDating Today!",
     "signInDescription": "Sign in to discover amazing matches and find your perfect connection!",
     "signInToStart": "Sign In to Start Matching",
     "createAccount": "Create New Account",
