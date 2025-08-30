@@ -180,7 +180,7 @@ export default async function RootLayout({
         <link rel="apple-touch-icon" href="/icon-192x192.svg" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#ec4899" />
-        <meta name="google-site-verification" content="UEg2Aj4jti8_J9KcWPSU2YQTkAR_KfrPvnszug8OeVk" />
+        <meta name="google-site-verification" content={process.env.GOOGLE_SITE_VERIFICATION} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

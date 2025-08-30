@@ -19,6 +19,7 @@ export default function MatchesPage() {
   const [showMatchNotification, setShowMatchNotification] = useState(false)
   const [matchedUser, setMatchedUser] = useState<UserProfile | null>(null)
   const [isDragging, setIsDragging] = useState(false)
+  const [dataLoaded, setDataLoaded] = useState(false)
 
   const router = useRouter()
   const t = useTranslations('Matches')
@@ -53,19 +54,34 @@ export default function MatchesPage() {
         // Check if user is authenticated
         if (!user) {
           setLoading(false)
+          setDataLoaded(false)
+          setPotentialMatches([])
+          setCurrentIndex(0)
           return
         }
 
+        // Reset states when starting to load
+        setLoading(true)
+        setDataLoaded(false)
+        setCurrentIndex(0)
+        
         const potentialMatchesData = await getPotentialMatches()
-        console.log(potentialMatchesData)
+        console.log('Loaded potential matches:', potentialMatchesData)
         setPotentialMatches(potentialMatchesData)
+        setDataLoaded(true)
       } catch (error) {
-        console.error(error)
+        console.error('Error loading potential matches:', error)
+        setPotentialMatches([])
+        setDataLoaded(true)
       } finally {
         setLoading(false)
       }
     }
-    loadUsers()
+    
+    // Only load if user is available
+    if (user) {
+      loadUsers()
+    }
   }, [user])
 
   const animateCardOut = (direction: "left" | "right", onCompleteCallback: () => void) => {
@@ -218,7 +234,7 @@ export default function MatchesPage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            {t('joinMatcha')}
+            {t('joinTMTDating')}
           </motion.h2>
           <motion.p 
             className="text-sm sm:text-lg text-gray-600 mb-8"
@@ -359,8 +375,133 @@ export default function MatchesPage() {
     )
   }
 
-  // Show "no more profiles" only when loading is complete and there are no more matches
-  if (!loading && currentIndex >= potentialMatches.length) {
+  // Show "no more profiles" when no profiles are available
+  if (dataLoaded && !loading && potentialMatches.length === 0) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-purple-50 flex items-center justify-center px-4 relative overflow-hidden">
+        {/* Animated background */}
+        <div className="absolute inset-0 overflow-hidden">
+          <motion.div
+            className="absolute top-20 left-10 w-32 h-32 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70"
+            animate={{
+              scale: [1, 1.2, 1],
+              rotate: [0, 180, 360],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
+          <motion.div
+            className="absolute top-40 right-10 w-40 h-40 bg-rose-200 rounded-full mix-blend-multiply filter blur-xl opacity-70"
+            animate={{
+              scale: [1.2, 1, 1.2],
+              rotate: [360, 180, 0],
+            }}
+            transition={{
+              duration: 25,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
+        </div>
+
+        <motion.div 
+          className="text-center max-w-sm sm:max-w-md mx-auto relative z-10"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.div 
+            className="relative mb-8"
+            animate={{ 
+              scale: [1, 1.05, 1],
+              rotate: [0, 5, -5, 0]
+            }}
+            transition={{ 
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          >
+            <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto bg-gradient-to-br from-pink-500 to-rose-500 rounded-full flex items-center justify-center shadow-2xl">
+              <Sparkles className="w-12 h-12 sm:w-16 sm:h-16 text-white" />
+            </div>
+            <motion.div 
+              className="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 w-6 h-6 sm:w-8 sm:h-8 bg-yellow-400 rounded-full flex items-center justify-center"
+              animate={{ 
+                scale: [1, 1.2, 1],
+                rotate: [0, 360]
+              }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <span className="text-xs sm:text-sm font-bold">✨</span>
+            </motion.div>
+          </motion.div>
+          
+          <motion.h2 
+            className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            {t('noMoreProfiles')}
+          </motion.h2>
+          <motion.p 
+            className="text-sm sm:text-lg text-gray-600 mb-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            {t('noMoreProfilesDesc')}
+          </motion.p>
+          
+          <motion.div 
+            className="space-y-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+          >
+            <motion.button
+              onClick={() => window.location.reload()}
+              className="w-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold py-4 px-8 rounded-2xl hover:from-pink-600 hover:to-rose-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 text-base relative overflow-hidden group"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <motion.div
+                className="absolute inset-0 bg-white/20"
+                initial={{ x: "-100%" }}
+                whileHover={{ x: "100%" }}
+                transition={{ duration: 0.6 }}
+              />
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                <RefreshCw className="w-5 h-5" />
+                {t('refreshProfiles')}
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </span>
+            </motion.button>
+            
+            <motion.button
+              onClick={() => router.push("/list-matches")}
+              className="w-full bg-white text-pink-600 font-semibold py-3 px-6 rounded-xl border-2 border-pink-200 hover:border-pink-300 transition-all duration-200 text-base"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              {t('viewAllMatches')}
+            </motion.button>
+          </motion.div>
+        </motion.div>
+      </div>
+    )
+  }
+
+  // Check if we've seen all profiles
+  if (dataLoaded && !loading && currentIndex >= potentialMatches.length && potentialMatches.length > 0) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-purple-50 flex items-center justify-center px-4 relative overflow-hidden">
         {/* Animated background */}

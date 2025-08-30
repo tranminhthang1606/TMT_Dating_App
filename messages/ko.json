@@ -1,6 +1,6 @@
 {
   "Navbar": {
-    "brand": "Matcha",
+    "brand": "TMTDating",
     "explore": "탐색",
     "connections": "연결",
     "messages": "메시지",
@@ -41,7 +41,7 @@
     "newMatch": "새 매치",
     "pass": "패스",
     "like": "좋아요",
-    "joinMatcha": "오늘 Matcha에 가입하세요!",
+    "joinTMTDating": "오늘 TMTDating에 가입하세요!",
     "signInDescription": "로그인하여 놀라운 매치를 발견하고 완벽한 연결을 찾아보세요!",
     "signInToStart": "매칭을 시작하려면 로그인하세요",
     "createAccount": "새 계정 만들기",
