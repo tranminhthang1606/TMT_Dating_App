@@ -42,17 +42,17 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   // Localized content
   const localizedContent = {
     vi: {
-      title: 'Matcha - Ứng dụng hẹn hò hiện đại',
+      title: 'TMTDating - Ứng dụng hẹn hò hiện đại',
       description: 'Ứng dụng hẹn hò hiện đại giúp bạn tìm kiếm tình yêu đích thực với tính năng ghép đôi thông minh, video chat và nhắn tin an toàn',
       keywords: ['hẹn hò', 'ghép đôi', 'tình yêu', 'mối quan hệ', 'ứng dụng hẹn hò', 'tìm kiếm tình yêu'],
     },
     ko: {
-      title: 'Matcha - 현대적인 데이팅 앱',
+      title: 'TMTDating - 현대적인 데이팅 앱',
       description: '진정한 사랑을 찾을 수 있도록 도와주는 현대적인 데이팅 앱으로 스마트 매칭, 비디오 채팅, 안전한 메시징 기능을 제공합니다',
       keywords: ['데이팅', '매칭', '사랑', '관계', '데이팅 앱', '진정한 사랑 찾기'],
     },
     en: {
-      title: 'Matcha - Modern Dating App',
+      title: 'TMTDating - Modern Dating App',
       description: 'Modern dating app to help you find true love with smart matching, video chat, and secure messaging',
       keywords: ['dating', 'match', 'love', 'relationship', 'dating app', 'find love', 'online dating'],
     }
@@ -67,9 +67,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     },
     description: content.description,
     keywords: content.keywords,
-    authors: [{ name: 'Matcha Team', url: baseUrl }],
-    creator: 'Matcha',
-    publisher: 'Matcha',
+    authors: [{ name: 'TMTDating Team', url: baseUrl }],
+    creator: 'TMTDating',
+    publisher: 'TMTDating',
     formatDetection: {
       email: false,
       address: false,
@@ -91,13 +91,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       url: baseUrl,
       title: content.title,
       description: content.description,
-      siteName: 'Matcha',
+      siteName: 'TMTDating',
       images: [
         {
           url: '/og-image.svg',
           width: 1200,
           height: 630,
-          alt: 'Matcha Dating App - Find Your True Love',
+          alt: 'TMTDating Dating App - Find Your True Love',
           type: 'image/svg+xml',
         },
       ],
@@ -107,8 +107,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       title: content.title,
       description: content.description,
       images: ['/og-image.svg'],
-      creator: '@matcha_app',
-      site: '@matcha_app',
+      creator: '@TMTDating_app',
+      site: '@TMTDating_app',
     },
     robots: {
       index: true,
@@ -129,8 +129,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     other: {
       'apple-mobile-web-app-capable': 'yes',
       'apple-mobile-web-app-status-bar-style': 'default',
-      'apple-mobile-web-app-title': 'Matcha',
-      'application-name': 'Matcha',
+      'apple-mobile-web-app-title': 'TMTDating',
+      'application-name': 'TMTDating',
       'msapplication-TileColor': '#ec4899',
       'msapplication-config': '/browserconfig.xml',
     },
@@ -148,7 +148,7 @@ export default async function RootLayout({
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Matcha",
+    "name": "TMTDating",
     "description": "Modern dating app to help you find true love",
     "url": process.env.NEXT_PUBLIC_BASE_URL || 'https://tmtdating.vercel.app',
     "applicationCategory": "DatingApplication",
@@ -169,7 +169,7 @@ export default async function RootLayout({
     "softwareVersion": "1.0.0",
     "author": {
       "@type": "Organization",
-      "name": "Matcha Team"
+      "name": "TMTDating Team"
     }
   };
 
