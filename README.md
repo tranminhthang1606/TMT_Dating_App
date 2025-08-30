@@ -5,11 +5,10 @@ A modern, responsive dating application built with Next.js, featuring smart matc
 ## 🌟 Features
 
 - **Smart Matching Algorithm**: Advanced compatibility matching based on preferences, age, and location
-- **Video Chat**: Real-time video calling with WebRTC technology
-- **Secure Messaging**: End-to-end encrypted chat system
+- **Video Chat**: Real-time video calling with STREAM technology
+- **Secure Messaging**: End-to-end encrypted chat system by STREAM
 - **Profile Management**: Comprehensive profile editing with preferences
 - **Multi-language Support**: English, Vietnamese, and Korean
-- **PWA Support**: Installable as a native app
 - **Responsive Design**: Works seamlessly on desktop and mobile
 
 ## 🚀 SEO Optimizations
@@ -53,12 +52,12 @@ This project includes comprehensive SEO optimizations:
 
 ## 🔧 Technical Stack
 
-- **Framework**: Next.js 14 with App Router
+- **Framework**: Next.js 15 with App Router
 - **Styling**: Tailwind CSS with custom components
 - **Database**: Supabase (PostgreSQL)
 - **Authentication**: Supabase Auth
-- **Real-time**: Supabase Realtime
-- **Video Chat**: WebRTC with custom implementation
+- **Real-time**: STREAM
+- **Video Chat**: STREAM
 - **Internationalization**: next-intl
 - **Animations**: GSAP
 - **Icons**: Heroicons
@@ -80,16 +79,16 @@ This project includes comprehensive SEO optimizations:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/matcha-dating-app.git
+git clone https://github.com/tranminhthang1606/TMT_Dating_App
 
 # Install dependencies
-npm install
+pnpm install
 
 # Set up environment variables
 cp .env.example .env.local
 
 # Run the development server
-npm run dev
+pnpm run dev
 ```
 
 ## 🔑 Environment Variables
