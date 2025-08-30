@@ -8,7 +8,7 @@ import { AuthProvider } from "./AuthProvider";
 import ProfilePage from "./profile/page";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-
+import { SpeedInsights } from "@vercel/speed-insights/next"
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
