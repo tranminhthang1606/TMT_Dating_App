@@ -268,6 +268,7 @@ export default function MatchesPage() {
     )
   }
 
+  // Show loading state while fetching data
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-purple-50 flex items-center justify-center px-4 relative overflow-hidden">
@@ -358,7 +359,8 @@ export default function MatchesPage() {
     )
   }
 
-  if (currentIndex >= potentialMatches.length) {
+  // Show "no more profiles" only when loading is complete and there are no more matches
+  if (!loading && currentIndex >= potentialMatches.length) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-purple-50 flex items-center justify-center px-4 relative overflow-hidden">
         {/* Animated background */}
@@ -432,7 +434,7 @@ export default function MatchesPage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            {t('noProfilesTitle')}
+            {t('noMoreProfiles')}
           </motion.h2>
           <motion.p 
             className="text-sm sm:text-lg text-gray-600 mb-8"
@@ -440,7 +442,7 @@ export default function MatchesPage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            {t('noProfilesDesc')}
+            {t('noMoreProfilesDesc')}
           </motion.p>
           
           <motion.div 
@@ -450,7 +452,7 @@ export default function MatchesPage() {
             transition={{ delay: 0.7 }}
           >
             <motion.button
-              onClick={() => router.replace("/matches")}
+              onClick={() => window.location.reload()}
               className="w-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-semibold py-4 px-8 rounded-2xl hover:from-pink-600 hover:to-rose-600 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 text-base relative overflow-hidden group"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -463,7 +465,8 @@ export default function MatchesPage() {
               />
               <span className="relative z-10 flex items-center justify-center gap-2">
                 <RefreshCw className="w-5 h-5" />
-                {t('reload')}
+                {t('refreshProfiles')}
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </span>
             </motion.button>
             
@@ -473,14 +476,10 @@ export default function MatchesPage() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              View All Profiles
+              {t('viewAllMatches')}
             </motion.button>
           </motion.div>
         </motion.div>
-        
-        {showMatchNotification && matchedUser && (
-          <MatchNotification match={matchedUser} onClose={handleCloseMatchNotification} onStartChat={handleStartChat} />
-        )}
       </div>
     )
   }
