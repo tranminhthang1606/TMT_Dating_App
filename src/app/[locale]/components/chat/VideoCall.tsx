@@ -9,6 +9,7 @@ import {
   StreamVideoClient,
 } from "@stream-io/video-react-sdk";
 import { useEffect, useState } from "react";
+import { useTranslations } from 'next-intl';
 
 import "@stream-io/video-react-sdk/dist/css/styles.css";
 
@@ -29,6 +30,7 @@ export default function VideoCall({
   const [error, setError] = useState<string | null>(null);
   const [hasJoined, setHasJoined] = useState(false);
   const [hasLeft, setHasLeft] = useState(false);
+  const t = useTranslations('Call');
 
   useEffect(() => {
     let isMounted = true;
@@ -113,7 +115,7 @@ export default function VideoCall({
         <div className="text-center text-white">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
           <p className="text-lg">
-            {isIncoming ? "Đang tham gia cuộc gọi..." : "Đang bắt đầu cuộc gọi..."}
+            {isIncoming ? t('joiningCall') : t('startingCall')}
           </p>
         </div>
       </div>
@@ -127,13 +129,13 @@ export default function VideoCall({
           <div className="w-16 h-16 bg-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
             <span className="text-2xl">❌</span>
           </div>
-          <h3 className="text-xl font-semibold mb-2">Lỗi cuộc gọi</h3>
+          <h3 className="text-xl font-semibold mb-2">{t('callError')}</h3>
           <p className="text-gray-300 mb-4">{error}</p>
           <button
             onClick={onCallEnd}
             className="bg-gradient-to-r from-pink-500 to-red-500 text-white font-semibold py-3 px-6 rounded-full hover:from-pink-600 hover:to-red-600 transition-all duration-200"
           >
-            Đóng
+            {t('close')}
           </button>
         </div>
       </div>
@@ -145,7 +147,7 @@ export default function VideoCall({
       <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
         <div className="text-center text-white">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
-          <p className="text-lg">Đang thiết lập cuộc gọi...</p>
+          <p className="text-lg">{t('settingUpCall')}</p>
         </div>
       </div>
     );

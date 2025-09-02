@@ -10,6 +10,7 @@ import { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
 import { Power2 } from "gsap/all";
 import { UserIcon, IdentificationIcon, GlobeAsiaAustraliaIcon, PencilSquareIcon, EnvelopeIcon, ArrowLeftIcon, ArrowUpOnSquareIcon, HeartIcon } from "@heroicons/react/24/outline";
+import { useTranslations } from 'next-intl';
 
 export interface UserProfile {
     id: string;
@@ -56,6 +57,7 @@ export default function EditProfilePage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const t = useTranslations('Profile');
 
   const [formData, setFormData] = useState({
     full_name: "",
@@ -140,10 +142,10 @@ export default function EditProfilePage() {
       if (result.success) {
         router.push("/profile");
       } else {
-        setError(result.error || "Cập nhật hồ sơ thất bại.");
+        setError(result.error || t('updateProfileFailed'));
       }
     } catch (err) {
-      setError("Cập nhật hồ sơ thất bại.");
+      setError(t('updateProfileFailed'));
     } finally {
       setSaving(false);
     }
@@ -185,11 +187,11 @@ export default function EditProfilePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
+      <div className="h-full bg-gradient-to-br from-pink-50 to-red-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-pink-500 mx-auto"></div>
           <p className="mt-4 text-gray-600">
-            Đang tải hồ sơ...
+            {t('loadingProfile')}
           </p>
         </div>
       </div>
@@ -197,14 +199,14 @@ export default function EditProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-50 to-red-50 flex pt-24 justify-center p-4">
+    <div className=" bg-gradient-to-br from-pink-50 to-red-50 flex pt-24 justify-center p-4">
       <div ref={containerRef} className="container mx-auto opacity-0">
         <header ref={headerRef} className="text-center mb-8">
           <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-500 mb-2">
-            Chỉnh sửa hồ sơ
+            {t('editProfile')}
           </h1>
           <p className="text-lg text-gray-600">
-            Cập nhật thông tin cá nhân của bạn để nổi bật hơn
+            {t('updatePersonalInfo')}
           </p>
         </header>
 
@@ -217,7 +219,7 @@ export default function EditProfilePage() {
             <div ref={avatarSectionRef}>
               <h3 className="text-xl font-bold text-gray-800 mb-4">
                 <UserIcon className="w-6 h-6 inline-block mr-2 text-pink-500" />
-                Ảnh đại diện
+                {t('profileAvatar')}
               </h3>
               <div className="flex items-center space-x-6">
                 <div className="relative">
@@ -239,10 +241,10 @@ export default function EditProfilePage() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-600 mb-2">
-                    Tải lên một ảnh đại diện mới.
+                    {t('uploadNewAvatar')}
                   </p>
                   <p className="text-xs text-gray-500">
-                    JPG, PNG hoặc GIF. Tối đa 5MB.
+                    {t('fileTypes')}
                   </p>
                 </div>
               </div>
@@ -252,12 +254,12 @@ export default function EditProfilePage() {
             <div ref={fieldsRef}>
               <h3 className="text-xl font-bold text-gray-800 mb-4">
                 <IdentificationIcon className="w-6 h-6 inline-block mr-2 text-pink-500" />
-                Thông tin cơ bản
+                {t('basicInfo')}
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="full_name" className="block text-sm font-medium text-gray-700 mb-2">
-                    Họ và tên *
+                    {t('fullNameRequired')}
                   </label>
                   <input
                     type="text"
@@ -267,12 +269,12 @@ export default function EditProfilePage() {
                     onChange={handleInputChange}
                     required
                     className="w-full px-4 text-gray-700 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                    placeholder="Nhập họ và tên của bạn"
+                    placeholder={t('fullNamePlaceholder')}
                   />
                 </div>
                 <div>
                   <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
-                    Tên người dùng *
+                    {t('usernameRequired')}
                   </label>
                   <input
                     type="text"
@@ -282,12 +284,12 @@ export default function EditProfilePage() {
                     onChange={handleInputChange}
                     required
                     className="w-full text-gray-700 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                    placeholder="Chọn một tên người dùng"
+                    placeholder={t('usernamePlaceholder')}
                   />
                 </div>
                 <div>
                   <label htmlFor="gender" className="block text-sm font-medium text-gray-700 mb-2">
-                    Giới tính *
+                    {t('genderRequired')}
                   </label>
                   <select
                     id="gender"
@@ -304,7 +306,7 @@ export default function EditProfilePage() {
                 </div>
                 <div>
                   <label htmlFor="birthdate" className="block text-sm font-medium text-gray-700 mb-2">
-                    Ngày sinh *
+                    {t('birthdateRequired')}
                   </label>
                   <input
                     type="date"
@@ -322,7 +324,7 @@ export default function EditProfilePage() {
             <div ref={bioRef}>
               <h3 className="text-xl font-bold text-gray-800 mb-4">
                 <PencilSquareIcon className="w-6 h-6 inline-block mr-2 text-pink-500" />
-                Giới thiệu về bạn
+                {t('introduceYourself')}
               </h3>
               <textarea
                 id="bio"
@@ -333,10 +335,10 @@ export default function EditProfilePage() {
                 rows={4}
                 maxLength={500}
                 className="w-full text-gray-700 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent resize-none"
-                placeholder="Chia sẻ một chút về bản thân..."
+                placeholder={t('shareAboutYourself')}
               />
               <p className="text-xs text-gray-500 mt-1">
-                {formData.bio.length}/500 ký tự
+                                    {formData.bio.length}/500 {t('characters')}
               </p>
             </div>
 
@@ -344,17 +346,17 @@ export default function EditProfilePage() {
             <div ref={preferencesRef}>
               <h3 className="text-xl font-bold text-gray-800 mb-4">
                 <HeartIcon className="w-6 h-6 inline-block mr-2 text-pink-500" />
-                Sở thích tìm kiếm
+                {t('searchPreferences')}
               </h3>
               
               {/* Age Range */}
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-3">
-                  Khoảng tuổi mong muốn
+                  {t('desiredAgeRange')}
                 </label>
                 <div className="flex items-center space-x-4">
                   <div className="flex-1">
-                    <label className="block text-xs text-gray-500 mb-1">Từ</label>
+                    <label className="block text-xs text-gray-500 mb-1">{t('from')}</label>
                     <input
                       type="number"
                       min="18"
@@ -369,7 +371,7 @@ export default function EditProfilePage() {
                   </div>
                   <div className="text-gray-400">-</div>
                   <div className="flex-1">
-                    <label className="block text-xs text-gray-500 mb-1">Đến</label>
+                    <label className="block text-xs text-gray-500 mb-1">{t('to')}</label>
                     <input
                       type="number"
                       min="18"
@@ -388,7 +390,7 @@ export default function EditProfilePage() {
               {/* Distance */}
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Khoảng cách tối đa (km)
+                  {t('maxDistance')} (km)
                 </label>
                 <input
                   type="range"
@@ -399,16 +401,16 @@ export default function EditProfilePage() {
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                 />
                 <div className="flex justify-between text-xs text-gray-500 mt-1">
-                  <span>1km</span>
-                  <span className="font-medium text-pink-500">{formData.preferences.distance}km</span>
-                  <span>100km</span>
+                  <span>{t('minDistance')}</span>
+                  <span className="font-medium text-pink-500">{formData.preferences.distance}{t('km')}</span>
+                  <span>{t('maxDistance')}</span>
                 </div>
               </div>
 
               {/* Gender Preference */}
               <div className="mb-6">
                 <label className="block text-sm font-medium text-gray-700 mb-3">
-                  Giới tính quan tâm
+                  {t('genderInterest')}
                 </label>
                 <div className="flex flex-wrap gap-3">
                   {(["male", "female", "other"] as const).map((gender) => (
@@ -422,12 +424,12 @@ export default function EditProfilePage() {
                           : "border-gray-300 bg-white text-gray-700 hover:border-pink-300"
                       }`}
                     >
-                      {gender === "male" ? "Nam" : gender === "female" ? "Nữ" : "Khác"}
+                      {gender === "male" ? t('genderMale') : gender === "female" ? t('genderFemale') : t('genderOther')}
                     </button>
                   ))}
                 </div>
                 <p className="text-xs text-gray-500 mt-2">
-                  Chọn tất cả nếu bạn quan tâm đến mọi giới tính
+                  {t('selectAllIfInterestedInAllGenders')}
                 </p>
               </div>
             </div>
@@ -445,7 +447,7 @@ export default function EditProfilePage() {
                 className="flex items-center space-x-2 px-6 py-2 text-gray-700 hover:text-gray-900 transition-colors duration-200"
               >
                 <ArrowLeftIcon className="w-5 h-5" />
-                <span>Hủy</span>
+                <span>{t('cancel')}</span>
               </button>
               <button
                 type="submit"
@@ -455,10 +457,10 @@ export default function EditProfilePage() {
                 {saving ? (
                   <>
                     <ArrowUpOnSquareIcon className="w-5 h-5 animate-bounce" />
-                    <span>Đang lưu...</span>
+                    <span>{t('savingProfile')}</span>
                   </>
                 ) : (
-                  <span>Lưu thay đổi</span>
+                  <span>{t('saveChanges')}</span>
                 )}
               </button>
             </div>
