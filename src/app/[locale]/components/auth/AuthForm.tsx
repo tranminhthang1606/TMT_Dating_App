@@ -16,7 +16,7 @@ export default function AuthForm({ isLogin }: AuthFormProps) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const { user, authLoading } = useAuthStore();
+  const { user, loading: authLoading } = useAuthStore();
   const t = useTranslations('Auth');
   const supabase = createClient();
 
