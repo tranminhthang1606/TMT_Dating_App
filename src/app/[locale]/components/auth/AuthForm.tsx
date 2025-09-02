@@ -1,39 +1,40 @@
-import { createClient } from "@/lib/supabase/client";
-import useAuthStore from "@/store/authStore";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+"use client";
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { createClient } from '@/lib/supabase/client';
+import useAuthStore from '@/store/authStore';
 
 interface AuthFormProps {
   isLogin: boolean;
 }
 
 export default function AuthForm({ isLogin }: AuthFormProps) {
-
-  const supabase = createClient();
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { user, loading: authLoading } = useAuthStore();
+  const t = useTranslations('Auth');
+  const supabase = createClient();
+
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
-
     setLoading(true);
-    setError("");
+    setError('');
 
     try {
       if (!isLogin) {
-        const { data, error } = await supabase.auth.signUp({
+        const { error } = await supabase.auth.signUp({
           email,
           password,
         });
-
-        if (error) throw error;
-        if (data.user && !data.session) {
-          setError("Please check your email for a confirmation link");
-          return;
+        if (error) {
+          throw error;
         }
+        return;
       } else {
         const { error } = await supabase.auth.signInWithPassword({
           email,
@@ -114,11 +115,11 @@ export default function AuthForm({ isLogin }: AuthFormProps) {
               className="h-4 w-4 text-pink-500 focus:ring-pink-500 border-gray-300 rounded"
             />
             <label htmlFor="remember-me" className="ml-2 text-sm text-gray-600 dark:text-gray-400">
-              Ghi nhớ đăng nhập
+              {t('rememberMe')}
             </label>
           </div>
           <a href="#" className="text-sm text-pink-500 hover:text-pink-600">
-            Quên mật khẩu?
+            {t('forgotPassword')}
           </a>
         </div>
       )}
@@ -127,7 +128,7 @@ export default function AuthForm({ isLogin }: AuthFormProps) {
         type="submit"
         className="w-full cursor-pointer py-3 px-4 bg-pink-500 hover:bg-pink-600 text-white rounded-lg font-medium transition-colors duration-200"
       >
-        {loading ? "Loading..." : isLogin ? 'Đăng Nhập' : 'Đăng Ký'}
+        {loading ? t('loading') : isLogin ? t('login') : t('signup')}
       </button>
     </form>
   );

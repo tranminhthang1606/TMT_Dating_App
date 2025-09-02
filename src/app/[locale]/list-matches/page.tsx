@@ -20,11 +20,13 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
 export default function MatchesListPage() {
   const [matches, setMatches] = useState<UserProfile[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
   const locale = useLocale();
   const t = useTranslations('MatchesList');
   const headerRef = useRef<HTMLDivElement>(null);
@@ -68,7 +70,7 @@ export default function MatchesListPage() {
             <Heart className="w-10 h-10 text-white animate-pulse" />
           </div>
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            Đang tải danh sách match...
+            {t('loading')}
           </h2>
           <p className="text-gray-600 dark:text-gray-400">{t('loading')}</p>
         </div>
@@ -90,7 +92,7 @@ export default function MatchesListPage() {
                 {t('title')}
               </h1>
               <p className="text-xl text-gray-600 dark:text-gray-400 mt-2">
-                {t('count', {count: matches.length})} người phù hợp với bạn
+                {t('count', {count: matches.length})} {t('peopleSuitableForYou')}
               </p>
             </div>
           </div>
@@ -138,13 +140,13 @@ export default function MatchesListPage() {
                         {match.is_verified && (
                           <div className="bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-medium flex items-center space-x-1 shadow-lg">
                             <CheckCircle className="w-3 h-3 fill-current" />
-                            <span>Verified</span>
+                            <span>{t('verified')}</span>
                           </div>
                         )}
                         {match.is_online && (
                           <div className="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-medium flex items-center space-x-1 shadow-lg">
                             <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
-                            <span>Online</span>
+                            <span>{t('online')}</span>
                           </div>
                         )}
                       </div>

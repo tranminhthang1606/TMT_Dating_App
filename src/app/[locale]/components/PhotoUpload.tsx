@@ -3,6 +3,7 @@
 import { uploadProfilePhoto } from "@/lib/actions/profile";
 import { useRef, useState, useEffect } from "react";
 import { gsap } from "gsap";
+import { useTranslations } from 'next-intl';
 
 export default function PhotoUpload({
   onPhotoUploaded,
@@ -15,6 +16,7 @@ export default function PhotoUpload({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const spinnerRef = useRef<HTMLDivElement>(null);
   const iconRef = useRef<SVGSVGElement>(null);
+  const t = useTranslations('Profile');
 
   useEffect(() => {
     // Hiệu ứng xuất hiện ban đầu của nút
@@ -73,7 +75,7 @@ export default function PhotoUpload({
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-      setError("Vui lòng chọn một file ảnh.");
+              setError(t('pleaseSelectImageFile'));
       return;
     }
 
@@ -120,7 +122,7 @@ export default function PhotoUpload({
         onClick={handleClick}
         disabled={uploading}
         className="relative w-10 h-10 flex items-center justify-center bg-pink-500 text-white rounded-full hover:bg-pink-600 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-        title="Đổi ảnh đại diện"
+        title={t('changePhoto')}
       >
         <div 
           ref={spinnerRef}

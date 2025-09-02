@@ -7,7 +7,7 @@ import { Power2 } from "gsap/all";
 import { ArrowPathIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { getCurrentUserProfile } from "@/lib/actions/profile";
 import useAuthStore from "@/store/authStore";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 // Giả lập các hàm và kiểu dữ liệu từ bên ngoài
 // Bạn cần đảm bảo các hàm này có sẵn trong dự án của bạn
@@ -76,11 +76,12 @@ const calculateAge = (birthdate: string): number => {
 };
 
 // Component chính
-const ProfilePage = () => {
+export default function ProfilePage() {
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const {signOut} = useAuthStore();
+    const t = useTranslations('Profile');
     // GSAP refs cho các phần tử
     const profileCardRef = useRef<HTMLDivElement>(null);
     const avatarRef = useRef<HTMLDivElement>(null);
@@ -135,7 +136,7 @@ const ProfilePage = () => {
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-rose-500 mx-auto"></div>
                     <p className="mt-4 ">
-                        Đang tải hồ sơ...
+                        {t('loadingProfile')}
                     </p>
                 </div>
             </div>
@@ -170,10 +171,10 @@ const ProfilePage = () => {
         <div className="pt-24 min-h-screen flex flex-col items-center p-4">
             <header className="text-center mb-8">
                 <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-rose-500 mb-2">
-                    Hồ sơ của tôi
+                    {t('myProfile')}
                 </h1>
                 <p className="">
-                    Quản lý hồ sơ và sở thích của bạn
+                    {t('profileManagement')}
                 </p>
             </header>
             <div ref={profileCardRef} className="w-full max-w-5xl opacity-0">
@@ -206,7 +207,7 @@ const ProfilePage = () => {
                                 @{profile.username}
                             </p>
                             <p className="mt-4 text-gray-700 leading-relaxed text-lg">
-                                {profile.bio || "Chưa có giới thiệu."}
+                                {profile.bio || t('noBio')}
                             </p>
                         </div>
                     </div>
@@ -218,37 +219,37 @@ const ProfilePage = () => {
                         <div ref={mainContentRef} className="lg:col-span-2 space-y-8">
                             <div>
                                 <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                                    Thông tin chi tiết
+                                    {t('detailedInfo')}
                                 </h3>
                                 <div className="space-y-6">
                                     <div>
-                                        <h4 className="text-lg font-semibold text-gray-700 mb-2">Thông tin cơ bản</h4>
+                                        <h4 className="text-lg font-semibold text-gray-700 mb-2">{t('basicInfo')}</h4>
                                         <div className="grid grid-cols-2 gap-4 text-gray-600">
                                             <div>
-                                                <span className="font-medium">Giới tính:</span> <span className="capitalize">{profile.gender}</span>
+                                                <span className="font-medium">{t('genderLabel')}</span> <span className="capitalize">{profile.gender}</span>
                                             </div>
                                             <div>
-                                                <span className="font-medium">Ngày sinh:</span> <span>{new Date(profile.birthdate).toLocaleDateString()}</span>
+                                                <span className="font-medium">{t('birthdateLabel')}</span> <span>{new Date(profile.birthdate).toLocaleDateString()}</span>
                                             </div>
                                             <div>
-                                                <span className="font-medium">Tuổi:</span> <span>{calculateAge(profile.birthdate)}</span>
+                                                <span className="font-medium">{t('age')}</span> <span>{calculateAge(profile.birthdate)}</span>
                                             </div>
                                             <div>
-                                                <span className="font-medium">Tham gia:</span> <span>{new Date(profile.created_at).toLocaleDateString()}</span>
+                                                <span className="font-medium">{t('joinDate')}</span> <span>{new Date(profile.created_at).toLocaleDateString()}</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div>
-                                        <h4 className="text-lg font-semibold text-gray-700 mb-2">Sở thích hẹn hò</h4>
+                                        <h4 className="text-lg font-semibold text-gray-700 mb-2">{t('datingPreferencesTitle')}</h4>
                                         <div className="grid grid-cols-2 gap-4 text-gray-600">
                                             <div>
-                                                <span className="font-medium">Độ tuổi:</span> <span>{profile.preferences.age_range.min} - {profile.preferences.age_range.max} tuổi</span>
+                                                <span className="font-medium">{t('ageRange')}</span> <span>{profile.preferences.age_range.min} - {profile.preferences.age_range.max} {t('yearsOld')}</span>
                                             </div>
                                             <div>
-                                                <span className="font-medium">Khoảng cách:</span> <span>Lên tới {profile.preferences.distance} km</span>
+                                                <span className="font-medium">{t('distance')}</span> <span>{t('upTo')} {profile.preferences.distance} {t('km')}</span>
                                             </div>
                                             <div>
-                                                <span className="font-medium">Ưu tiên giới tính:</span> <span className="capitalize">{profile.preferences.gender_preference.join(", ")}</span>
+                                                <span className="font-medium">{t('genderPreferenceLabel')}</span> <span className="capitalize">{profile.preferences.gender_preference.join(", ")}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -259,7 +260,7 @@ const ProfilePage = () => {
                         {/* Cột bên lề - Tác vụ và Tài khoản */}
                         <div ref={sideContentRef} className="lg:col-span-1 space-y-6">
                             <div className="bg-gray-50 rounded-2xl p-6 shadow-inner">
-                                <h3 className="text-xl font-bold text-gray-800 mb-4">Tác vụ nhanh</h3>
+                                <h3 className="text-xl font-bold text-gray-800 mb-4">{t('quickTasks')}</h3>
                                 <div className="space-y-4">
                                     <Link
                                         href={`/${locale}/profile/edit`}
@@ -271,7 +272,7 @@ const ProfilePage = () => {
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.23-8.23zM21.75 18v.5c0 .717-.384 1.405-1.006 1.855l-5.658 4.244a1.875 1.875 0 01-2.484 0l-5.658-4.244A2.25 2.25 0 011.5 18.5V18" />
                                                 </svg>
                                             </div>
-                                            <span className="text-gray-800 font-medium">Chỉnh sửa hồ sơ</span>
+                                            <span className="text-gray-800 font-medium">{t('editProfile')}</span>
                                         </div>
                                         <svg
                                             className="w-5 h-5 text-gray-400 group-hover:translate-x-1 transition-transform"
@@ -297,7 +298,7 @@ const ProfilePage = () => {
                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 9.75v6.75m0 0l-3-3m3 3l3-3M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                 </svg>
                                             </div>
-                                            <span className="text-gray-800 font-medium">Đăng xuất</span>
+                                            <span className="text-gray-800 font-medium">{t('signOut')}</span>
                                         </div>
                                         <svg
                                             className="w-5 h-5 text-gray-400 group-hover:translate-x-1 transition-transform"
@@ -323,4 +324,3 @@ const ProfilePage = () => {
     );
 };
 
-export default ProfilePage;

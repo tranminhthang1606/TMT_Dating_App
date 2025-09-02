@@ -107,8 +107,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       title: content.title,
       description: content.description,
       images: ['/og-image.svg'],
-      creator: '@TMTDating_app',
-      site: '@TMTDating_app',
+      creator: '@tmtdating_app',
+      site: '@tmtdating_app',
     },
     robots: {
       index: true,

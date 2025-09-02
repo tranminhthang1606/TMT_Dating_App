@@ -107,9 +107,9 @@ export default function ChatPage() {
             <MessageCircle className="w-10 h-10 text-white animate-pulse" />
           </div>
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            Đang tải tin nhắn...
+            {t('settingUp')}
           </h2>
-          <p className="text-gray-600 dark:text-gray-400">{t('loadingMatches')}</p>
+          <p className="text-gray-600 dark:text-gray-400">{t('settingUp')}</p>
         </motion.div>
       </div>
     );
