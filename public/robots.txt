@@ -36,7 +36,6 @@ Crawl-delay: 0.5
 User-agent: Bingbot
 Allow: /
 Crawl-delay: 1
-
 User-agent: Slurp
 Allow: /
 Crawl-delay: 1
@@ -50,3 +49,4 @@ Disallow: /
 
 User-agent: MJ12bot
 Disallow: /
+

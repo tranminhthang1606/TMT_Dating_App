@@ -17,10 +17,31 @@ export default function SocialLogin() {
       setLoading(true);
       setError(null);
       
+      // Get current locale from pathname
+      const currentLocale = window.location.pathname.split('/')[1] || 'vi';
+      
+      // Smart redirect URL detection
+      // If we're on localhost (development), use localhost:3000
+      // If we're on production domain, use the production domain
+      let baseUrl: string;
+      
+      if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        // Development environment
+        baseUrl = 'http://localhost:3000';
+      } else {
+        // Production environment - use environment variable or current origin
+        baseUrl = process.env.NEXT_PUBLIC_BASE_URL || window.location.origin;
+      }
+      
+      const redirectUrl = `${baseUrl}/${currentLocale}/auth/callback`;
+      
+      console.log('Environment:', window.location.hostname === 'localhost' ? 'Development' : 'Production');
+      console.log('Google OAuth redirect URL:', redirectUrl);
+      
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/${window.location.pathname.split('/')[1]}/auth/callback`,
+          redirectTo: redirectUrl,
         },
       });
       
